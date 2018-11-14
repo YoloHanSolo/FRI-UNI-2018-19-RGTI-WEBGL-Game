@@ -7,6 +7,13 @@ var pMatrix = mat4.create();
 
 var objects = [];
 
+var cameraPosition = [0.0, 0.0, 0.0];
+var cameraRotation = [0, 0, 0];
+
+function degToRad(degrees) {
+  return degrees * Math.PI / 180;
+}
+
 function initGL(canvas) {
   var gl = null;
   try {
@@ -127,9 +134,9 @@ function initBuffers(){
 		  
 		objects[0].colors = [
 			1.0, 1.0, 1.0, 1.0, 
-			1.0, 1.0, 1.0, 1.0, 
-			1.0, 1.0, 1.0, 1.0, 
-			1.0, 1.0, 1.0, 1.0
+			1.0, 0.0, 0.0, 1.0, 
+			0.0, 1.0, 0.0, 1.0, 
+			0.0, 0.0, 1.0, 1.0
 		];
   
 		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(objects[0].colors), gl.STATIC_DRAW);
@@ -163,10 +170,17 @@ function drawScene() {
   // Set the drawing position to the "identity" point, which is
   // the center of the scene.
   mat4.identity(mvMatrix);
+  
+  //Camera translation
+  mat4.rotate(mvMatrix, degToRad(degToRad(-cameraRotation[0])), [1, 0, 0]);
+  mat4.rotate(mvMatrix, degToRad(degToRad(-cameraRotation[1])), [0, 1, 0]);
+  mat4.rotate(mvMatrix, degToRad(degToRad(-cameraRotation[2])), [0, 0, 1]);
+  mat4.translate(mvMatrix, [-cameraPosition[0], -cameraPosition[1], -cameraPosition[2]]);
 
   // Now move the drawing position a bit to where we want to start
   // drawing the cube.
   mat4.translate(mvMatrix, [0.0, 0.0, -7.0]);
+
 
   // Save the current matrix, then rotate before we draw.
   //mat4.rotate(mvMatrix, degToRad(rotationCube), [1, 1, 1]);
@@ -206,10 +220,15 @@ function start() {
     // Here's where we call the routine that builds all the objects
     // we'll be drawing.
     initBuffers();
+	
+	// Bind keyboard handling functions to document handlers
+    document.onkeydown = handleKeyDown;
+    document.onkeyup = handleKeyUp;
     
     // Set up to draw the scene periodically.
     setInterval(function() {
       //requestAnimationFrame(animate);
+	  handleKeys();
       drawScene();
     }, 15);
   }
