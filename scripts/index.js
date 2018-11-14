@@ -114,38 +114,36 @@ function initBuffers(){
 	objects[0] = new Base();
 	
 	loadObject("./assets/object.obj", function(data){
+		objects[0].VertexPositionBuffer = gl.createBuffer();
+		gl.bindBuffer(gl.ARRAY_BUFFER, objects[0].VertexPositionBuffer);
+		
 		objects[0].vertices = data.v;
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(objects[0].vertices), gl.STATIC_DRAW);
 		objects[0].VertexPositionBuffer.itemSize = 3;
 		objects[0].VertexPositionBuffer.numItems = data.vCount;
+		
+		objects[0].VertexColorBuffer = gl.createBuffer();
+		gl.bindBuffer(gl.ARRAY_BUFFER, objects[0].VertexColorBuffer);
+		  
+		objects[0].colors = [
+			1.0, 1.0, 1.0, 1.0, 
+			1.0, 1.0, 1.0, 1.0, 
+			1.0, 1.0, 1.0, 1.0, 
+			1.0, 1.0, 1.0, 1.0
+		];
+  
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(objects[0].colors), gl.STATIC_DRAW);
+		objects[0].VertexColorBuffer.itemSize = 4;
+		objects[0].VertexColorBuffer.numItems = 4;
+		
+		objects[0].VertexIndexBuffer = gl.createBuffer();
+		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, objects[0].VertexIndexBuffer);
+		
 		objects[0].vertexIndices = data.f;
+		gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(objects[0].vertexIndices), gl.STATIC_DRAW);
 		objects[0].VertexIndexBuffer.itemSize = 1;
 		objects[0].VertexIndexBuffer.numItems = data.fCount;
 	});
-	
-	objects[0].VertexPositionBuffer = gl.createBuffer();
-	gl.bindBuffer(gl.ARRAY_BUFFER, objects[0].VertexPositionBuffer);
-  
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(objects[0].vertices), gl.STATIC_DRAW);
-
-  
-  objects[0].VertexColorBuffer = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, objects[0].VertexColorBuffer);
-  
-  objects[0].colors = [
-      1.0, 1.0, 1.0, 1.0, 
-      1.0, 1.0, 1.0, 1.0, 
-      1.0, 1.0, 1.0, 1.0, 
-      1.0, 1.0, 1.0, 1.0
-  ];
-  
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(objects[0].colors), gl.STATIC_DRAW);
-  objects[0].VertexColorBuffer.itemSize = 4;
-  objects[0].VertexColorBuffer.numItems = 4;
-  
-  objects[0].VertexIndexBuffer = gl.createBuffer();
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, objects[0].VertexIndexBuffer);
-  
-  gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(objects[0].vertexIndices), gl.STATIC_DRAW);
   
   console.log(objects[0])
 }

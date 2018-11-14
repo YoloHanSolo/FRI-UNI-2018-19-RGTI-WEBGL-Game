@@ -20,12 +20,12 @@ function handleLoad(fileData){
 	for (line in lines){
 		if(lines[line][0]=='v' && lines[line][1]==' '){
 				var v = lines[line].split(' ');
-				data.v.push(v[1], v[2], v[3]);
+				data.v.push(parseFloat(v[1]), parseFloat(v[2]), parseFloat(v[3]));
 				data.vCount++;
 			}
 			if(lines[line][0]=='f' && lines[line][1]==' '){
 				var f = lines[line].split(' ');
-				data.f.push(f[1], f[2], f[3]);
+				data.f.push(parseInt(f[1]), parseInt(f[2]), parseInt(f[3]));
 				data.fCount+=3;
 			}
 	}
