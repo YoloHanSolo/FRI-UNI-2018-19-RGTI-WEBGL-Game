@@ -100,10 +100,10 @@ function initShaders() {
   gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
 
   // store location of aVertexColor variable defined in shader
-  shaderProgram.vertexColorAttribute = gl.getAttribLocation(shaderProgram, "aVertexColor");
+  /*shaderProgram.vertexColorAttribute = gl.getAttribLocation(shaderProgram, "aVertexColor");
 
   // turn on vertex color attribute at specified position
-  gl.enableVertexAttribArray(shaderProgram.vertexColorAttribute);
+  gl.enableVertexAttribArray(shaderProgram.vertexColorAttribute);*/
 
   // store location of uPMatrix variable defined in shader - projection matrix 
   shaderProgram.pMatrixUniform = gl.getUniformLocation(shaderProgram, "uPMatrix");
@@ -120,7 +120,7 @@ function setMatrixUniforms() {
 function initBuffers(){
 	objects[0] = new Base();
 	
-	loadObject("./assets/object.obj", function(data){
+	loadObject("./assets/lestev.obj", function(data){
 		objects[0].VertexPositionBuffer = gl.createBuffer();
 		gl.bindBuffer(gl.ARRAY_BUFFER, objects[0].VertexPositionBuffer);
 		
@@ -131,17 +131,6 @@ function initBuffers(){
 		
 		objects[0].VertexColorBuffer = gl.createBuffer();
 		gl.bindBuffer(gl.ARRAY_BUFFER, objects[0].VertexColorBuffer);
-		  
-		objects[0].colors = [
-			1.0, 1.0, 1.0, 1.0, 
-			1.0, 0.0, 0.0, 1.0, 
-			0.0, 1.0, 0.0, 1.0, 
-			0.0, 0.0, 1.0, 1.0
-		];
-  
-		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(objects[0].colors), gl.STATIC_DRAW);
-		objects[0].VertexColorBuffer.itemSize = 4;
-		objects[0].VertexColorBuffer.numItems = 4;
 		
 		objects[0].VertexIndexBuffer = gl.createBuffer();
 		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, objects[0].VertexIndexBuffer);
@@ -180,20 +169,15 @@ function drawScene() {
   // Now move the drawing position a bit to where we want to start
   // drawing the cube.
   mat4.translate(mvMatrix, [0.0, 0.0, -7.0]);
-
-
-  // Save the current matrix, then rotate before we draw.
-  //mat4.rotate(mvMatrix, degToRad(rotationCube), [1, 1, 1]);
+  mat4.rotate(mvMatrix, degToRad(degToRad(180)), [1, 0, 0]);
+  mat4.rotate(mvMatrix, degToRad(degToRad(0)), [0, 1, 0]);
+  mat4.rotate(mvMatrix, degToRad(degToRad(0)), [0, 0, 1]);
 
   // Draw the cube by binding the array buffer to the cube's vertices
   // array, setting attributes, and pushing it to GL.
   gl.bindBuffer(gl.ARRAY_BUFFER, objects[0].VertexPositionBuffer);
   gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, objects[0].VertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
   
-  // Set the colors attribute for the vertices.
-  gl.bindBuffer(gl.ARRAY_BUFFER, objects[0].VertexColorBuffer);
-  gl.vertexAttribPointer(shaderProgram.vertexColorAttribute, objects[0].VertexColorBuffer.itemSize, gl.FLOAT, false, 0, 0);
-
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, objects[0].VertexIndexBuffer);
 
   // Draw the cube.

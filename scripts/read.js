@@ -13,21 +13,67 @@ function handleLoad(fileData){
 	var data = {};
 	var lines = fileData.split("\n");
 	data.v = [];
+	data.vn = [];
 	data.f = [];
 	data.vCount = 0;
+	data.vnCount = 0;
 	data.fCount = 0;
 	
+	var vertices = [];
+	var normals = [];
+	var textures = [];
+
+	var unpacked = {};
+    unpacked.verts = [];
+    unpacked.norms = [];
+    unpacked.textures = [];
+    unpacked.hashindices = {};
+    unpacked.indices = [];
+    unpacked.index = 0;
+	
 	for (line in lines){
-		if(lines[line][0]=='v' && lines[line][1]==' '){
-				var v = lines[line].split(' ');
-				data.v.push(parseFloat(v[1]), parseFloat(v[2]), parseFloat(v[3]));
-				data.vCount++;
+		var elements = lines[line].split(' ');
+		if(elements[0] == "v"){
+			vertices.push(parseFloat(elements[1]), parseFloat(elements[2]), parseFloat(elements[3]));
+			data.vCount++;
+		}
+		if(elements[0] == "vn"){
+			normals.push(parseFloat(elements[1]), parseFloat(elements[2]), parseFloat(elements[3]));
+			data.vnCount++;
+		}
+		if(elements[0] == "f"){
+			for(var j = 1; j < elements.length; j++){
+				if(elements[j] in unpacked.hashindices){
+					unpacked.indices.push(unpacked.hashindices[elements[j]]);
+				}
+				else{
+					var vertex = elements[j].split('//');
+					
+					// vertex position
+					unpacked.verts.push(vertices[(vertex[0] - 1) * 3 + 0]);
+					unpacked.verts.push(vertices[(vertex[0] - 1) * 3 + 1]);
+					unpacked.verts.push(vertices[(vertex[0] - 1) * 3 + 2]);
+					// vertex textures
+					/*unpacked.textures.push(textures[(vertex[1] - 1) * 2 + 0]);
+					unpacked.textures.push(textures[(vertex[1] - 1) * 2 + 1]);*/
+					// vertex normals
+					unpacked.norms.push(normals[(vertex[1] - 1) * 3 + 0]);
+					unpacked.norms.push(normals[(vertex[1] - 1) * 3 + 1]);
+					unpacked.norms.push(normals[(vertex[1] - 1) * 3 + 2]);
+					// add the newly created vertex to the list of indices
+					unpacked.hashindices[elements[j]] = unpacked.index;
+					unpacked.indices.push(unpacked.index);
+					// increment the counter
+					unpacked.index += 1;
+				}
 			}
-			if(lines[line][0]=='f' && lines[line][1]==' '){
-				var f = lines[line].split(' ');
-				data.f.push(parseInt(f[1]), parseInt(f[2]), parseInt(f[3]));
-				data.fCount+=3;
-			}
+		}
 	}
+	
+	data.v = unpacked.verts;
+	data.vn = unpacked.norms;
+	data.f = unpacked.indices;
+	data.fCount = unpacked.indices.length;
+	
 	return data;
 }
