@@ -2,6 +2,7 @@
 var gl;
 var shaderProgram;
 
+var mvMatrixStack = [];
 var mvMatrix = mat4.create();
 var pMatrix = mat4.create();
 
@@ -11,6 +12,19 @@ var cameraPosition = [0.0, 0.0, 0.0];
 var cameraRotation = [0, 0, 0];
 
 var objectsName = ["cev", "el_omarica", "kljuc", "lestev", "luc", "resetke", "sod", "ventil", "vrata", "zelezna_vrata"];
+
+function mvPushMatrix() {
+  var copy = mat4.create();
+  mat4.set(mvMatrix, copy);
+  mvMatrixStack.push(copy);
+}
+
+function mvPopMatrix() {
+  if (mvMatrixStack.length == 0) {
+    throw "Invalid popMatrix!";
+  }
+  mvMatrix = mvMatrixStack.pop();
+}
 
 function degToRad(degrees) {
   return degrees * Math.PI / 180;
@@ -183,34 +197,8 @@ function drawScene() {
   // the center of the scene.
   mat4.identity(mvMatrix);
   
-  //Camera translation
-  mat4.translate(mvMatrix, [-cameraPosition[0], -cameraPosition[1], -cameraPosition[2]]);
-  mat4.rotate(mvMatrix, degToRad(degToRad(-cameraRotation[0])), [1, 0, 0]);
-  mat4.rotate(mvMatrix, degToRad(degToRad(-cameraRotation[1])), [0, 1, 0]);
-  mat4.rotate(mvMatrix, degToRad(degToRad(-cameraRotation[2])), [0, 0, 1]);
-  
+  objects[i].draw([0.0, 0.0, -7.0], [1.0, 1.0, 1.0], [0, 0, 0]);
 
-  // Now move the drawing position a bit to where we want to start
-  // drawing the cube.
-  mat4.translate(mvMatrix, [0.0, 0.0, -7.0]);
-  mat4.rotate(mvMatrix, degToRad(degToRad(180)), [1, 0, 0]);
-  mat4.rotate(mvMatrix, degToRad(degToRad(0)), [0, 1, 0]);
-  mat4.rotate(mvMatrix, degToRad(degToRad(0)), [0, 0, 1]);
-
-  // Draw the cube by binding the array buffer to the cube's vertices
-  // array, setting attributes, and pushing it to GL.
-  gl.bindBuffer(gl.ARRAY_BUFFER, objects[i].VertexPositionBuffer);
-  gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, objects[i].VertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
-  
-  // Set the normals attribute for vertices.
-  gl.bindBuffer(gl.ARRAY_BUFFER, objects[i].VertexNormalBuffer);
-  gl.vertexAttribPointer(shaderProgram.vertexNormalAttribute, objects[i].VertexNormalBuffer.itemSize, gl.FLOAT, false, 0, 0);
-  
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, objects[i].VertexIndexBuffer);
-
-  // Draw the cube.
-  setMatrixUniforms();
-  gl.drawElements(gl.TRIANGLES, objects[i].VertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
 }
 
 function start() {

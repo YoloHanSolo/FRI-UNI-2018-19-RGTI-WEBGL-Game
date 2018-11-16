@@ -29,10 +29,10 @@ function handleKeys() {
 	}
 	//q
 	if (currentlyPressedKeys[81]) {
-		cameraRotation[1]+=60;
+		cameraRotation[1]+=1;
 	}
 	//e
 	if (currentlyPressedKeys[69]) {
-		cameraRotation[1]-=60;
+		cameraRotation[1]-=1;
 	}
 }
