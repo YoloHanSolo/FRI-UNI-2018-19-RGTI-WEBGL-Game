@@ -99,22 +99,30 @@ function initShaders() {
   // turn on vertex position attribute at specified position
   gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
 
-  // store location of aVertexColor variable defined in shader
-  /*shaderProgram.vertexColorAttribute = gl.getAttribLocation(shaderProgram, "aVertexColor");
+  // store location of aVertexNormal variable defined in shader
+  shaderProgram.vertexNormalAttribute = gl.getAttribLocation(shaderProgram, "aVertexNormal");
 
-  // turn on vertex color attribute at specified position
-  gl.enableVertexAttribArray(shaderProgram.vertexColorAttribute);*/
-
+  // turn on vertex normal attribute at specified position
+  gl.enableVertexAttribArray(shaderProgram.vertexNormalAttribute);
+  
   // store location of uPMatrix variable defined in shader - projection matrix 
   shaderProgram.pMatrixUniform = gl.getUniformLocation(shaderProgram, "uPMatrix");
 
   // store location of uMVMatrix variable defined in shader - model-view matrix 
   shaderProgram.mvMatrixUniform = gl.getUniformLocation(shaderProgram, "uMVMatrix");
+  
+  // store location of uNMatrix variable defined in shader - normal matrix 
+  shaderProgram.nMatrixUniform = gl.getUniformLocation(shaderProgram, "uNMatrix");
 }
 
 function setMatrixUniforms() {
   gl.uniformMatrix4fv(shaderProgram.pMatrixUniform, false, pMatrix);
   gl.uniformMatrix4fv(shaderProgram.mvMatrixUniform, false, mvMatrix);
+  
+  var normalMatrix = mat3.create();
+  mat4.toInverseMat3(mvMatrix, normalMatrix);
+  mat3.transpose(normalMatrix);
+  gl.uniformMatrix3fv(shaderProgram.nMatrixUniform, false, normalMatrix);
 }
 
 function initBuffers(){
@@ -129,8 +137,16 @@ function initBuffers(){
 		objects[0].VertexPositionBuffer.itemSize = 3;
 		objects[0].VertexPositionBuffer.numItems = data.vCount;
 		
-		objects[0].VertexColorBuffer = gl.createBuffer();
-		gl.bindBuffer(gl.ARRAY_BUFFER, objects[0].VertexColorBuffer);
+		/*objects[0].VertexColorBuffer = gl.createBuffer();
+		gl.bindBuffer(gl.ARRAY_BUFFER, objects[0].VertexColorBuffer);*/
+		
+		objects[0].VertexNormalBuffer = gl.createBuffer();
+		gl.bindBuffer(gl.ARRAY_BUFFER, objects[0].VertexNormalBuffer);
+		
+		objects[0].normals = data.vn;
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(objects[0].normals), gl.STATIC_DRAW);
+		objects[0].VertexNormalBuffer.itemSize = 3;
+		objects[0].VertexNormalBuffer.numItems = data.vnCount;
 		
 		objects[0].VertexIndexBuffer = gl.createBuffer();
 		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, objects[0].VertexIndexBuffer);
@@ -169,7 +185,7 @@ function drawScene() {
   // Now move the drawing position a bit to where we want to start
   // drawing the cube.
   mat4.translate(mvMatrix, [0.0, 0.0, -7.0]);
-  mat4.rotate(mvMatrix, degToRad(degToRad(180)), [1, 0, 0]);
+  mat4.rotate(mvMatrix, degToRad(degToRad(90)), [1, 0, 0]);
   mat4.rotate(mvMatrix, degToRad(degToRad(0)), [0, 1, 0]);
   mat4.rotate(mvMatrix, degToRad(degToRad(0)), [0, 0, 1]);
 
@@ -177,6 +193,10 @@ function drawScene() {
   // array, setting attributes, and pushing it to GL.
   gl.bindBuffer(gl.ARRAY_BUFFER, objects[0].VertexPositionBuffer);
   gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, objects[0].VertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
+  
+  // Set the normals attribute for vertices.
+  gl.bindBuffer(gl.ARRAY_BUFFER, objects[0].VertexNormalBuffer);
+  gl.vertexAttribPointer(shaderProgram.vertexNormalAttribute, objects[0].VertexNormalBuffer.itemSize, gl.FLOAT, false, 0, 0);
   
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, objects[0].VertexIndexBuffer);
 

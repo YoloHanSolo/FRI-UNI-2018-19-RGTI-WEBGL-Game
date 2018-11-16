@@ -35,11 +35,11 @@ function handleLoad(fileData){
 		var elements = lines[line].split(' ');
 		if(elements[0] == "v"){
 			vertices.push(parseFloat(elements[1]), parseFloat(elements[2]), parseFloat(elements[3]));
-			data.vCount++;
+			//data.vCount++;
 		}
 		if(elements[0] == "vn"){
 			normals.push(parseFloat(elements[1]), parseFloat(elements[2]), parseFloat(elements[3]));
-			data.vnCount++;
+			//data.vnCount++;
 		}
 		if(elements[0] == "f"){
 			for(var j = 1; j < elements.length; j++){
@@ -74,6 +74,8 @@ function handleLoad(fileData){
 	data.vn = unpacked.norms;
 	data.f = unpacked.indices;
 	data.fCount = unpacked.indices.length;
+	data.vnCount = unpacked.norms.length/3;
+	data.vCount = unpacked.verts.length/3;
 	
 	return data;
 }
