@@ -10,6 +10,8 @@ var objects = [];
 var cameraPosition = [0.0, 0.0, 0.0];
 var cameraRotation = [0, 0, 0];
 
+var objectsName = ["cev", "el_omarica", "kljuc", "lestev", "luc", "resetke", "sod", "ventil", "vrata", "zelezna_vrata"];
+
 function degToRad(degrees) {
   return degrees * Math.PI / 180;
 }
@@ -126,41 +128,46 @@ function setMatrixUniforms() {
 }
 
 function initBuffers(){
-	objects[0] = new Base();
-	
-	loadObject("./assets/lestev.obj", function(data){
-		objects[0].VertexPositionBuffer = gl.createBuffer();
-		gl.bindBuffer(gl.ARRAY_BUFFER, objects[0].VertexPositionBuffer);
-		
-		objects[0].vertices = data.v;
-		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(objects[0].vertices), gl.STATIC_DRAW);
-		objects[0].VertexPositionBuffer.itemSize = 3;
-		objects[0].VertexPositionBuffer.numItems = data.vCount;
-		
-		/*objects[0].VertexColorBuffer = gl.createBuffer();
-		gl.bindBuffer(gl.ARRAY_BUFFER, objects[0].VertexColorBuffer);*/
-		
-		objects[0].VertexNormalBuffer = gl.createBuffer();
-		gl.bindBuffer(gl.ARRAY_BUFFER, objects[0].VertexNormalBuffer);
-		
-		objects[0].normals = data.vn;
-		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(objects[0].normals), gl.STATIC_DRAW);
-		objects[0].VertexNormalBuffer.itemSize = 3;
-		objects[0].VertexNormalBuffer.numItems = data.vnCount;
-		
-		objects[0].VertexIndexBuffer = gl.createBuffer();
-		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, objects[0].VertexIndexBuffer);
-		
-		objects[0].vertexIndices = data.f;
-		gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(objects[0].vertexIndices), gl.STATIC_DRAW);
-		objects[0].VertexIndexBuffer.itemSize = 1;
-		objects[0].VertexIndexBuffer.numItems = data.fCount;
-	});
-  
-  console.log(objects[0])
+	for(var i = 0; i < objectsName.length; i++){
+		loadObject("./assets/" + objectsName[i] + ".obj", objectsName[i], function(data, name){
+			var object = new Base();
+			object.name = name;
+			object.VertexPositionBuffer = gl.createBuffer();
+			gl.bindBuffer(gl.ARRAY_BUFFER, object.VertexPositionBuffer);
+			
+			object.vertices = data.v;
+			gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(object.vertices), gl.STATIC_DRAW);
+			object.VertexPositionBuffer.itemSize = 3;
+			object.VertexPositionBuffer.numItems = data.vCount;
+			
+			/*objects[0].VertexColorBuffer = gl.createBuffer();
+			gl.bindBuffer(gl.ARRAY_BUFFER, objects[0].VertexColorBuffer);*/
+			
+			object.VertexNormalBuffer = gl.createBuffer();
+			gl.bindBuffer(gl.ARRAY_BUFFER, object.VertexNormalBuffer);
+			
+			object.normals = data.vn;
+			gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(object.normals), gl.STATIC_DRAW);
+			object.VertexNormalBuffer.itemSize = 3;
+			object.VertexNormalBuffer.numItems = data.vnCount;
+			
+			object.VertexIndexBuffer = gl.createBuffer();
+			gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, object.VertexIndexBuffer);
+			
+			object.vertexIndices = data.f;
+			gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(object.vertexIndices), gl.STATIC_DRAW);
+			object.VertexIndexBuffer.itemSize = 1;
+			object.VertexIndexBuffer.numItems = data.fCount;
+			
+			objects.push(object);
+		});
+	}
+	console.log(objects)
 }
 
 function drawScene() {
+	var i = 0;
+	
   // set the rendering environment to full canvas size
   gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
   // Clear the canvas before we start drawing on it.
@@ -186,24 +193,24 @@ function drawScene() {
   // Now move the drawing position a bit to where we want to start
   // drawing the cube.
   mat4.translate(mvMatrix, [0.0, 0.0, -7.0]);
-  mat4.rotate(mvMatrix, degToRad(degToRad(90)), [1, 0, 0]);
+  mat4.rotate(mvMatrix, degToRad(degToRad(180)), [1, 0, 0]);
   mat4.rotate(mvMatrix, degToRad(degToRad(0)), [0, 1, 0]);
   mat4.rotate(mvMatrix, degToRad(degToRad(0)), [0, 0, 1]);
 
   // Draw the cube by binding the array buffer to the cube's vertices
   // array, setting attributes, and pushing it to GL.
-  gl.bindBuffer(gl.ARRAY_BUFFER, objects[0].VertexPositionBuffer);
-  gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, objects[0].VertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
+  gl.bindBuffer(gl.ARRAY_BUFFER, objects[i].VertexPositionBuffer);
+  gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, objects[i].VertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
   
   // Set the normals attribute for vertices.
-  gl.bindBuffer(gl.ARRAY_BUFFER, objects[0].VertexNormalBuffer);
-  gl.vertexAttribPointer(shaderProgram.vertexNormalAttribute, objects[0].VertexNormalBuffer.itemSize, gl.FLOAT, false, 0, 0);
+  gl.bindBuffer(gl.ARRAY_BUFFER, objects[i].VertexNormalBuffer);
+  gl.vertexAttribPointer(shaderProgram.vertexNormalAttribute, objects[i].VertexNormalBuffer.itemSize, gl.FLOAT, false, 0, 0);
   
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, objects[0].VertexIndexBuffer);
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, objects[i].VertexIndexBuffer);
 
   // Draw the cube.
   setMatrixUniforms();
-  gl.drawElements(gl.TRIANGLES, objects[0].VertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
+  gl.drawElements(gl.TRIANGLES, objects[i].VertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
 }
 
 function start() {

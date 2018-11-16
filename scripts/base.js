@@ -7,4 +7,6 @@ function Base(){
 	this.colors;
 	this.normals;
 	this.vertexIndices;
+	
+	this.name;
 }

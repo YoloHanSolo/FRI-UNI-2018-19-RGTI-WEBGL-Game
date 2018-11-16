@@ -1,9 +1,9 @@
-function loadObject(url, callback){
+function loadObject(url, name, callback){
 	var request = new XMLHttpRequest();
 	request.open("GET", url);
 	request.onreadystatechange = function () {
 		if (request.readyState == 4) {
-			callback(handleLoad(request.responseText));
+			callback(handleLoad(request.responseText), name);
 		}
 	}
 	request.send();
