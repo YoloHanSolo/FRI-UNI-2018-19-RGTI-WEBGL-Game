@@ -177,10 +177,11 @@ function drawScene() {
   mat4.identity(mvMatrix);
   
   //Camera translation
+  mat4.translate(mvMatrix, [-cameraPosition[0], -cameraPosition[1], -cameraPosition[2]]);
   mat4.rotate(mvMatrix, degToRad(degToRad(-cameraRotation[0])), [1, 0, 0]);
   mat4.rotate(mvMatrix, degToRad(degToRad(-cameraRotation[1])), [0, 1, 0]);
   mat4.rotate(mvMatrix, degToRad(degToRad(-cameraRotation[2])), [0, 0, 1]);
-  mat4.translate(mvMatrix, [-cameraPosition[0], -cameraPosition[1], -cameraPosition[2]]);
+  
 
   // Now move the drawing position a bit to where we want to start
   // drawing the cube.
