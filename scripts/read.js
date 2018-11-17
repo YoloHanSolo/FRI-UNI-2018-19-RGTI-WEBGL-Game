@@ -32,6 +32,7 @@ function handleLoad(fileData){
     unpacked.index = 0;
 	
 	for (line in lines){
+		
 		var elements = lines[line].split(' ');
 		if(elements[0] == "v"){
 			vertices.push(parseFloat(elements[1]), parseFloat(elements[2]), parseFloat(elements[3]));

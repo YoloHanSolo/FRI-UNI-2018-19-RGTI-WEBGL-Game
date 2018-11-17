@@ -8,10 +8,10 @@ var pMatrix = mat4.create();
 
 var objects = [];
 
-var cameraPosition = [0.0, 0.0, 0.0];
-var cameraRotation = [0, 0, 0];
-
 var objectsName = ["cev", "el_omarica", "kljuc", "lestev", "luc", "resetke", "sod", "ventil", "vrata", "zelezna_vrata"];
+
+var cameraPosition = [0.0, 0.0, 7.0];
+var cameraRotation = [0, 0, 0];
 
 function mvPushMatrix() {
   var copy = mat4.create();
@@ -119,7 +119,8 @@ function initShaders() {
   shaderProgram.vertexNormalAttribute = gl.getAttribLocation(shaderProgram, "aVertexNormal");
 
   // turn on vertex normal attribute at specified position
-  gl.enableVertexAttribArray(shaderProgram.vertexNormalAttribute);
+  
+  // ERROR/WARNING // gl.enableVertexAttribArray(shaderProgram.vertexNormalAttribute);
   
   // store location of uPMatrix variable defined in shader - projection matrix 
   shaderProgram.pMatrixUniform = gl.getUniformLocation(shaderProgram, "uPMatrix");
@@ -176,29 +177,30 @@ function initBuffers(){
 			objects.push(object);
 		});
 	}
-	console.log(objects)
+	// PRINT OBJ // file:///C:/Users/Uporabnik/Desktop/RGTI-Seminarska-master/index.html.log(objects)
 }
 
 function drawScene() {
-	var i = 0;
+  for( var i=0; i<1; i++){
 	
-  // set the rendering environment to full canvas size
-  gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
-  // Clear the canvas before we start drawing on it.
-  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+	// set the rendering environment to full canvas size
+	gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
+	// Clear the canvas before we start drawing on it.
+	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
   
-  // Establish the perspective with which we want to view the
-  // scene. Our field of view is 45 degrees, with a width/height
-  // ratio and we only want to see objects between 0.1 units
-  // and 100 units away from the camera.
-  mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);
+	// Establish the perspective with which we want to view the
+	// scene. Our field of view is 45 degrees, with a width/height
+	// ratio and we only want to see objects between 0.1 units
+	// and 100 units away from the camera.
+	mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);
 
   // Set the drawing position to the "identity" point, which is
   // the center of the scene.
-  mat4.identity(mvMatrix);
+	mat4.identity(mvMatrix);
   
-  objects[i].draw([0.0, 0.0, -7.0], [1.0, 1.0, 1.0], [0, 0, 0]);
-
+  //objects[i].draw([0.0, 0.0, -7.0], [1.0, 1.0, 1.0], [rotateObj, rotateObj, rotateObj]);
+	objects[i].draw([0.0, 0.0, -7.0], [0.0, 0.0, 0.0], [rotateObj, rotateObj, rotateObj]);
+  }
 }
 
 function start() {

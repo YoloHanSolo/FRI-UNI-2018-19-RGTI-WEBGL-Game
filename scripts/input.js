@@ -14,18 +14,22 @@ function handleKeys() {
 	//w
 	if (currentlyPressedKeys[87]) {
 		cameraPosition[2]-=0.05;
+		objectPosition[2]-=0.05;
 	}
 	//s
 	if (currentlyPressedKeys[83]) {
 		cameraPosition[2]+=0.05;
+		objectPosition[2]+=0.05;
 	}
 	//a
 	if (currentlyPressedKeys[65]) {
 		cameraPosition[0]-=0.05;
+		objectPosition[0]-=0.05;
 	}
 	//d
 	if (currentlyPressedKeys[68]) {
 		cameraPosition[0]+=0.05;
+		objectPosition[0]+=0.05;
 	}
 	//q
 	if (currentlyPressedKeys[81]) {
