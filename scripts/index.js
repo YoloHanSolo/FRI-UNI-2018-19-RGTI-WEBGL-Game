@@ -10,8 +10,10 @@ var objects = [];
 
 var objectsName = ["cev", "el_omarica", "kljuc", "lestev", "luc", "resetke", "sod", "ventil", "vrata", "zelezna_vrata"];
 
-var cameraPosition = [0.0, 0.0, 7.0];
+var cameraPosition = [0.0, 0.0, 7.0]; // ZAČETNA POZICIJA KAMERE (se spreminja s časom)
 var cameraRotation = [0, 0, 0];
+
+var objectPosition = [1.0, 1.0, 3.0]; // POZICIJA OBJEKTA V SVETU (se ne spreminja s časom)
 
 function mvPushMatrix() {
   var copy = mat4.create();
@@ -198,8 +200,7 @@ function drawScene() {
   // the center of the scene.
 	mat4.identity(mvMatrix);
   
-  //objects[i].draw([0.0, 0.0, -7.0], [1.0, 1.0, 1.0], [rotateObj, rotateObj, rotateObj]);
-	objects[i].draw([0.0, 0.0, -7.0], [0.0, 0.0, 0.0], [rotateObj, rotateObj, rotateObj]);
+	objects[i].draw(objectPosition, [1.0, 1.0, 1.0], [rotateObj, rotateObj, rotateObj]);
   }
 }
 

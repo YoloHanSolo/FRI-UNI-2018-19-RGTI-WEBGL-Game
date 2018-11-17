@@ -1,6 +1,4 @@
 var rotateObj = 0;
-var objectScale = [1, 1, 1];
-var objectPosition = [0.0, 0.0, 0.0];
 
 function Base(){
 	this.VertexPositionBuffer;
@@ -31,11 +29,14 @@ Base.prototype.draw = function(translate, scale, rotate){
 	translateZ = objectPosition[2];
 	
 	//mat4.translate(mvMatrix, translate); // dela
-	//mat4.translate(mvMatrix, [translateX,translateY,translateZ]); 
 	//mat4.scale(mvMatrix, scale[0], scale[1], scale[2]);
+	//mat4.translate(mvMatrix, [translateX,translateY,translateZ]); 
+	mat4.translate(mvMatrix, objectPosition); 
 	mat4.rotate(mvMatrix, degToRad(rotate[0]), [1, 0, 0]); 
 	mat4.rotate(mvMatrix, degToRad(rotate[1]), [0, 1, 0]);
 	mat4.rotate(mvMatrix, degToRad(rotate[2]), [0, 0, 1]);
+	
+
 		
 	gl.bindBuffer(gl.ARRAY_BUFFER, this.VertexPositionBuffer);
 	gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, this.VertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
