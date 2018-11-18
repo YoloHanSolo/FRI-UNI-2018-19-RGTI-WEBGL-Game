@@ -10,17 +10,23 @@ function handleKeyUp(event) {
 
 function handleKeys() {
 	if (currentlyPressedKeys[87]) { // KEY PRESS (W)
-		speed = 0.1;
+		speedZ = movingSpeed;
 	}else if(currentlyPressedKeys[83]) { // KEY PRESS (S)
-		speed = -0.1;
+		speedZ = -movingSpeed;
 	}else
-		speed = 0;
+		speedZ = 0;
 	
 	if (currentlyPressedKeys[65]) {	// KEY PRESS (A)
-		cameraAngle = cameraRotationSpeed;
+		speedX = movingSpeed;
 	}else if(currentlyPressedKeys[68]) { // KEY PRESS (D)
-		cameraAngle = -cameraRotationSpeed;
+		speedX = -movingSpeed;
 	}else
-		cameraAngle = 0;
-
+		speedX = 0;
+	
+	if (currentlyPressedKeys[81]) {	// KEY PRESS (Q)
+		angle = -angleSpeed;
+	}else if(currentlyPressedKeys[69]) { // KEY PRESS (E)
+		angle = angleSpeed;
+	}else
+		angle = 0;
 }

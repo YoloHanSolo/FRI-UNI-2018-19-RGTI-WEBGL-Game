@@ -18,6 +18,7 @@ Base.prototype.draw = function(translate, scale, rotate){
 	
 	mvPushMatrix();
 
+	// ZAENKRAT KAMERO PREMIKAMO SAMO V X,Z SMER
 	//mat4.rotate(mvMatrix, degToRad(-cameraRotation[2]), [0, 0, 1]);
 	//mat4.rotate(mvMatrix, degToRad(-cameraRotation[0]), [1, 0, 0]);
 	mat4.rotate(mvMatrix, degToRad(-cameraRotation[0]), [0, 1, 0]); // LEVO-DESNO OBRAT

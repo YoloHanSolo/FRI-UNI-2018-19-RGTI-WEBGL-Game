@@ -10,17 +10,30 @@ var objects = [];
 
 var objectsName = ["cev", "el_omarica", "kljuc", "lestev", "luc", "resetke", "sod", "ventil", "vrata", "zelezna_vrata"];
 
-var cameraAngle = 0.0;
-var cameraRotationSpeed = 0.8;
+var angleSpeed = 0.8;
+var movingSpeed = 0.1;
+
+var angle = 0;
+var speedZ = 0;
+var speedX = 0;
+
 
 var cameraPosition = [0.0, 0.0, 7.0]; // ZAČETNA POZICIJA KAMERE (se spreminja s časom)
 var cameraRotation = [0, 0, 0];
 
-var objectScaling = [1.0, 1.0, 1.0];
 
+var objectScaling = [1.0, 1.0, 1.0];
 var objectPosition = [0.0, 0.0, 3.0]; // POZICIJA OBJEKTA V SVETU (se ne spreminja s časom)
 
-var speed = 0;
+/*
+var mouseX = 0;
+var mouseY = 0;
+var mouseDiffX = 0; // RAZLIKA MED PREMIKOM MISKE 
+var mouseDiffY = 0;
+var mouseSensitivity = 0.06;
+var dx = 0;
+var dy = 0;
+*/
 
 function mvPushMatrix() {
   var copy = mat4.create();
@@ -190,15 +203,19 @@ function initBuffers(){
 }
 
 function drawScene() {
+  
+  cameraRotation[0] -= angle;
 
-  if (speed != 0) {	
-    cameraPosition[0] -= Math.sin(degToRad(cameraRotation[0])) * speed; // positionX
-	cameraPosition[2] -= Math.cos(degToRad(cameraRotation[0])) * speed; // positionZ
+  if (speedZ != 0) {	
+    cameraPosition[0] -= Math.sin(degToRad(cameraRotation[0])) * speedZ; // positionX
+	cameraPosition[2] -= Math.cos(degToRad(cameraRotation[0])) * speedZ; // positionZ
   }
-  cameraRotation[0] += cameraAngle; // if A or D we add to cameraRotation
+  if (speedX != 0) {  
+    cameraPosition[0] -= Math.cos(degToRad(-cameraRotation[0])) * speedX; // positionX
+	cameraPosition[2] -= Math.sin(degToRad(-cameraRotation[0])) * speedX; // positionZ
+  }
 	
-  for( var i=0; i<1; i++){
-	
+	var i = 0;
 	// set the rendering environment to full canvas size
 	gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
 	// Clear the canvas before we start drawing on it.
@@ -215,7 +232,7 @@ function drawScene() {
 	mat4.identity(mvMatrix);
   
 	objects[i].draw(objectPosition, [1.0, 1.0, 1.0], [rotateObj, rotateObj, rotateObj]);
-  }
+  
 }
 
 function start() {
