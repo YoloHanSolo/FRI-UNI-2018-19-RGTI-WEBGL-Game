@@ -14,14 +14,14 @@ function Base(){
 }
 
 Base.prototype.draw = function(translate, scale, rotate){
-	rotateObj += 0.4;
+	rotateObj += 1;
 	
 	mvPushMatrix();
-	
-	//Camera translation dela
-	mat4.rotate(mvMatrix, degToRad(-cameraRotation[0]), [1, 0, 0]);
-	mat4.rotate(mvMatrix, degToRad(-cameraRotation[1]), [0, 1, 0]);
-	mat4.rotate(mvMatrix, degToRad(-cameraRotation[2]), [0, 0, 1]);
+
+	//mat4.rotate(mvMatrix, degToRad(-cameraRotation[2]), [0, 0, 1]);
+	//mat4.rotate(mvMatrix, degToRad(-cameraRotation[0]), [1, 0, 0]);
+	mat4.rotate(mvMatrix, degToRad(-cameraRotation[0]), [0, 1, 0]); // LEVO-DESNO OBRAT
+
 	mat4.translate(mvMatrix, [-cameraPosition[0], -cameraPosition[1], -cameraPosition[2]]);
 
 	translateX = objectPosition[0];

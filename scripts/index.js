@@ -10,10 +10,17 @@ var objects = [];
 
 var objectsName = ["cev", "el_omarica", "kljuc", "lestev", "luc", "resetke", "sod", "ventil", "vrata", "zelezna_vrata"];
 
+var cameraAngle = 0.0;
+var cameraRotationSpeed = 0.8;
+
 var cameraPosition = [0.0, 0.0, 7.0]; // ZAČETNA POZICIJA KAMERE (se spreminja s časom)
 var cameraRotation = [0, 0, 0];
 
-var objectPosition = [1.0, 1.0, 3.0]; // POZICIJA OBJEKTA V SVETU (se ne spreminja s časom)
+var objectScaling = [1.0, 1.0, 1.0];
+
+var objectPosition = [0.0, 0.0, 3.0]; // POZICIJA OBJEKTA V SVETU (se ne spreminja s časom)
+
+var speed = 0;
 
 function mvPushMatrix() {
   var copy = mat4.create();
@@ -183,6 +190,13 @@ function initBuffers(){
 }
 
 function drawScene() {
+
+  if (speed != 0) {	
+    cameraPosition[0] -= Math.sin(degToRad(cameraRotation[0])) * speed; // positionX
+	cameraPosition[2] -= Math.cos(degToRad(cameraRotation[0])) * speed; // positionZ
+  }
+  cameraRotation[0] += cameraAngle; // if A or D we add to cameraRotation
+	
   for( var i=0; i<1; i++){
 	
 	// set the rendering environment to full canvas size
