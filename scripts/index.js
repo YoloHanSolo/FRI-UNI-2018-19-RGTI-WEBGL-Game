@@ -8,7 +8,7 @@ var pMatrix = mat4.create();
 
 var objects = [];
 
-var objectsName = ["cev", "el_omarica", "kljuc", "lestev", "luc", "resetke", "sod", "ventil", "vrata", "zelezna_vrata"];
+var objectsName = ["kljuc_tex"] //,"cev", "el_omarica", "kljuc", "lestev", "luc", "resetke", "sod", "ventil", "vrata", "zelezna_vrata"];
 
 var angleSpeed = 0.8;
 var movingSpeed = 0.1;
@@ -140,6 +140,12 @@ function initShaders() {
   // store location of aVertexNormal variable defined in shader
   shaderProgram.vertexNormalAttribute = gl.getAttribLocation(shaderProgram, "aVertexNormal");
 
+  // store location of aTextureCoord variable defined in shader
+  shaderProgram.textureCoordAttribute = gl.getAttribLocation(shaderProgram, "aTextureCoord");
+
+  // turn on vertex texture coordinates attribute at specified position
+  gl.enableVertexAttribArray(shaderProgram.textureCoordAttribute);
+  
   // turn on vertex normal attribute at specified position
   
   // ERROR/WARNING // gl.enableVertexAttribArray(shaderProgram.vertexNormalAttribute);
@@ -152,6 +158,9 @@ function initShaders() {
   
   // store location of uNMatrix variable defined in shader - normal matrix 
   shaderProgram.nMatrixUniform = gl.getUniformLocation(shaderProgram, "uNMatrix");
+  
+    // store location of uSampler variable defined in shader
+  shaderProgram.samplerUniform = gl.getUniformLocation(shaderProgram, "uSampler");
 }
 
 function setMatrixUniforms() {
@@ -162,6 +171,16 @@ function setMatrixUniforms() {
   mat4.toInverseMat3(mvMatrix, normalMatrix);
   mat3.transpose(normalMatrix);
   gl.uniformMatrix3fv(shaderProgram.nMatrixUniform, false, normalMatrix);
+}
+
+function handleTextureLoaded(texture) {
+  gl.bindTexture(gl.TEXTURE_2D, texture);
+  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texture.image);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
+  gl.generateMipmap(gl.TEXTURE_2D);
+  gl.bindTexture(gl.TEXTURE_2D, null);
 }
 
 function initBuffers(){
@@ -179,6 +198,22 @@ function initBuffers(){
 			
 			/*objects[0].VertexColorBuffer = gl.createBuffer();
 			gl.bindBuffer(gl.ARRAY_BUFFER, objects[0].VertexColorBuffer);*/
+			
+			object.VertexTextureCoordinateBuffer = gl.createBuffer();
+			gl.bindBuffer(gl.ARRAY_BUFFER, object.VertexTextureCoordinateBuffer);
+			
+			object.textureCoordinates = data.vt;
+			gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(object.textureCoordinates), gl.STATIC_DRAW);
+			object.VertexTextureCoordinateBuffer.itemSize = 2;
+			object.VertexTextureCoordinateBuffer.numItems = data.vtCount;
+			
+			//initTexture
+			object.texture = gl.createTexture();
+			object.texture.image = new Image();
+			object.texture.image.onload = function(){
+				handleTextureLoaded(object.texture);
+			}
+			object.texture.image.src = "./assets/" + name + ".jpg";
 			
 			object.VertexNormalBuffer = gl.createBuffer();
 			gl.bindBuffer(gl.ARRAY_BUFFER, object.VertexNormalBuffer);
@@ -199,6 +234,7 @@ function initBuffers(){
 			objects.push(object);
 		});
 	}
+	console.log(objects)
 	// PRINT OBJ // file:///C:/Users/Uporabnik/Desktop/RGTI-Seminarska-master/index.html.log(objects)
 }
 
@@ -235,6 +271,14 @@ function drawScene() {
   
 }
 
+function texturesLoaded(){
+	for(var i = 0; i < objects.length; i++){
+		if(!objects[i].textureReady)
+			return false;
+	}
+	return true;
+}
+
 function start() {
   canvas = document.getElementById("glcanvas");
 
@@ -262,8 +306,10 @@ function start() {
     // Set up to draw the scene periodically.
     setInterval(function() {
       //requestAnimationFrame(animate);
-	  handleKeys();
-      drawScene();
+	  if (texturesLoaded) {
+		  handleKeys();
+		  drawScene();
+	  }
     }, 15);
   }
 }

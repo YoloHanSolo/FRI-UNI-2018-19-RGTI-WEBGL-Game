@@ -12,13 +12,15 @@
 	    <script id="shader-fs" type="x-shader/x-fragment">
 		    // set medium percision 
 		    //precision mediump float;
-
+			varying highp vec2 vTextureCoord;
+			
 		    // uniform attribute for setting the color
 		    //varying vec4 vColor;
+			uniform sampler2D uSampler;
 
 		    void main(void) {
 	        	// Setting color of fragments to input color
-		        gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+		        gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
 		    }
 	    </script>
 
@@ -29,6 +31,7 @@
 		    attribute vec3 aVertexPosition;
 		    //attribute vec4 aVertexColor;
 			attribute vec3 aVertexNormal;
+			attribute vec2 aTextureCoord;
 
 		    uniform mat4 uMVMatrix;	// model-view matrix
 		    uniform mat4 uPMatrix;	// projection matrix
@@ -36,12 +39,14 @@
 
 		    // variable for passing color from vertex shader to fragment shader
 		    //varying vec4 vColor;
+			varying highp vec2 vTextureCoord;
 
 		    void main(void) {
 		    	// calculate the vertex position
 		        gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
 		        //vColor = aVertexColor;
-				vec3 transformedNormal = uNMatrix * aVertexNormal;
+				//vec3 transformedNormal = uNMatrix * aVertexNormal;
+				vTextureCoord = aTextureCoord;
 		    }
 	    </script>
 	</head>

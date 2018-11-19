@@ -4,11 +4,14 @@ function Base(){
 	this.VertexPositionBuffer;
 	this.VertexColorBuffer;
 	this.VertexNormalBuffer;
+	this.VertexTextureCoordinateBuffer;
 	this.VertexIndexBuffer;
 	this.vertices;
 	this.colors;
 	this.normals;
+	this.textureCoordinates;
 	this.vertexIndices;
+	this.texture;
 	
 	this.name;
 }
@@ -47,6 +50,15 @@ Base.prototype.draw = function(translate, scale, rotate){
 	gl.bindBuffer(gl.ARRAY_BUFFER, this.VertexNormalBuffer);
 	gl.vertexAttribPointer(shaderProgram.vertexNormalAttribute, this.VertexNormalBuffer.itemSize, gl.FLOAT, false, 0, 0);
 	*/	
+	
+	// Set the texture coordinates attribute for the vertices.
+	gl.bindBuffer(gl.ARRAY_BUFFER, this.VertexTextureCoordinateBuffer);
+	gl.vertexAttribPointer(shaderProgram.textureCoordAttribute, this.VertexTextureCoordinateBuffer.itemSize, gl.FLOAT, false, 0, 0);
+
+	// Specify the texture to map onto the faces.
+	gl.activeTexture(gl.TEXTURE0);
+	gl.bindTexture(gl.TEXTURE_2D, this.texture);
+	gl.uniform1i(shaderProgram.samplerUniform, 0);
 	
 	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.VertexIndexBuffer);
 
