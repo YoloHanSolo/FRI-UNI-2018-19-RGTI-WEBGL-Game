@@ -140,15 +140,14 @@ function initShaders() {
   // store location of aVertexNormal variable defined in shader
   shaderProgram.vertexNormalAttribute = gl.getAttribLocation(shaderProgram, "aVertexNormal");
 
+  // turn on vertex normal attribute at specified position
+  gl.enableVertexAttribArray(shaderProgram.vertexNormalAttribute);
+  
   // store location of aTextureCoord variable defined in shader
   shaderProgram.textureCoordAttribute = gl.getAttribLocation(shaderProgram, "aTextureCoord");
 
   // turn on vertex texture coordinates attribute at specified position
   gl.enableVertexAttribArray(shaderProgram.textureCoordAttribute);
-  
-  // turn on vertex normal attribute at specified position
-  
-  // ERROR/WARNING // gl.enableVertexAttribArray(shaderProgram.vertexNormalAttribute);
   
   // store location of uPMatrix variable defined in shader - projection matrix 
   shaderProgram.pMatrixUniform = gl.getUniformLocation(shaderProgram, "uPMatrix");
@@ -159,8 +158,11 @@ function initShaders() {
   // store location of uNMatrix variable defined in shader - normal matrix 
   shaderProgram.nMatrixUniform = gl.getUniformLocation(shaderProgram, "uNMatrix");
   
-    // store location of uSampler variable defined in shader
+  // store location of uSampler variable defined in shader
   shaderProgram.samplerUniform = gl.getUniformLocation(shaderProgram, "uSampler");
+  
+  // store location of uLightingDirection variable defined in shader
+  shaderProgram.lightPositionUniform = gl.getUniformLocation(shaderProgram, "uLightPosition");
 }
 
 function setMatrixUniforms() {

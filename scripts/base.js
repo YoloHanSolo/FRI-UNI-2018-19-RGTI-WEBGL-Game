@@ -17,7 +17,7 @@ function Base(){
 }
 
 Base.prototype.draw = function(translate, scale, rotate){
-	rotateObj += 1;
+	//rotateObj += 1;
 	
 	mvPushMatrix();
 
@@ -45,11 +45,8 @@ Base.prototype.draw = function(translate, scale, rotate){
 	gl.bindBuffer(gl.ARRAY_BUFFER, this.VertexPositionBuffer);
 	gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, this.VertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
 	  
-	// ERROR/WARNING //
-	/*
 	gl.bindBuffer(gl.ARRAY_BUFFER, this.VertexNormalBuffer);
-	gl.vertexAttribPointer(shaderProgram.vertexNormalAttribute, this.VertexNormalBuffer.itemSize, gl.FLOAT, false, 0, 0);
-	*/	
+	gl.vertexAttribPointer(shaderProgram.vertexNormalAttribute, this.VertexNormalBuffer.itemSize, gl.FLOAT, false, 0, 0);	
 	
 	// Set the texture coordinates attribute for the vertices.
 	gl.bindBuffer(gl.ARRAY_BUFFER, this.VertexTextureCoordinateBuffer);
@@ -59,6 +56,8 @@ Base.prototype.draw = function(translate, scale, rotate){
 	gl.activeTexture(gl.TEXTURE0);
 	gl.bindTexture(gl.TEXTURE_2D, this.texture);
 	gl.uniform1i(shaderProgram.samplerUniform, 0);
+	
+	gl.uniform3fv(shaderProgram.lightPositionUniform, cameraPosition);
 	
 	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.VertexIndexBuffer);
 
