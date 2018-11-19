@@ -45,7 +45,7 @@ function handleLoad(fileData){
 			//data.vnCount++;
 		}
 		if(elements[0] == "vt"){
-			textures.push(parseFloat(elements[1]), parseFloat(elements[2]), parseFloat(elements[3]));
+			textures.push(parseFloat(elements[1]), parseFloat(elements[2]));
 			//data.vnCount++;
 		}
 		if(elements[0] == "f"){

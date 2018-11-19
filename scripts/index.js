@@ -8,7 +8,7 @@ var pMatrix = mat4.create();
 
 var objects = [];
 
-var objectsName = ["kljuc_tex"] //,"cev", "el_omarica", "kljuc", "lestev", "luc", "resetke", "sod", "ventil", "vrata", "zelezna_vrata"];
+var objectsName = ["kljuc_tex"]; //["kocka_test"]// //,"cev", "el_omarica", "kljuc", "lestev", "luc", "resetke", "sod", "ventil", "vrata", "zelezna_vrata"];
 
 var angleSpeed = 0.8;
 var movingSpeed = 0.1;
