@@ -56,11 +56,11 @@ Base.prototype.draw = function(translate, scale, rotate){
 	gl.uniform3fv(shaderProgram.lightPositionUniform, cameraPosition);
 	
 	if(this.ka != undefined)
-		gl.uniform3fv(shaderProgram.Ka, this.ka);
+		//gl.uniform3fv(shaderProgram.Ka, this.ka);
 	if(this.kd != undefined)
 		gl.uniform3fv(shaderProgram.Kd, this.kd);
 	if(this.ks != undefined)
-		gl.uniform3fv(shaderProgram.Ks, this.ks);
+		//gl.uniform3fv(shaderProgram.Ks, this.ks);
 	
 	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.VertexIndexBuffer);
 

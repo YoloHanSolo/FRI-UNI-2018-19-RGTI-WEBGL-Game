@@ -10,7 +10,7 @@ var objects = [];
 
 var objectsName = ["kljuc_tex"]; //["kocka_test"]// //,"cev", "el_omarica", "kljuc", "lestev", "luc", "resetke", "sod", "ventil", "vrata", "zelezna_vrata"];
 
-var angleSpeed = 0.8;
+var angleSpeed = 1.3;
 var movingSpeed = 0.1;
 
 var angleX = 0; // LEFT-RIGHT angle
@@ -269,9 +269,12 @@ function drawScene() {
 }
 
 function playerControl(){
-  
+
   cameraRotation[0] -= angleX;
   cameraRotation[2] -= angleY;
+  
+  if( cameraRotation[2] >= 180 ) cameraRotation[2] = 180;
+  if( cameraRotation[2] <=-180 ) cameraRotation[2] = -180;
   
   if (speedZ != 0) {	
     cameraPosition[0] -= Math.sin(degToRad(cameraRotation[0])) * speedZ; // positionX
@@ -290,7 +293,9 @@ function playerControl(){
 		jump = false;
 	} 
   }
+  
 }
+
 
 function texturesLoaded(){
 	for(var i = 0; i < objects.length; i++){
