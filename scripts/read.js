@@ -88,3 +88,38 @@ function handleLoad(fileData){
 	
 	return data;
 }
+
+function loadMaterial(url, callback){
+	var request = new XMLHttpRequest();
+	request.open("GET", url);
+	request.onreadystatechange = function () {
+		if (request.readyState == 4) {
+			callback(handleMaterial(request.responseText));
+		}
+	}
+	request.send();
+}
+
+function handleMaterial(fileData){
+	var data = {};
+	var lines = fileData.split("\n");
+	data.ka = [];
+	data.ks = [];
+	data.kd = [];
+	
+	for (line in lines){
+		
+		var elements = lines[line].split(' ');
+		if(elements[0] == "Ka"){
+			data.ka.push(parseFloat(elements[1]), parseFloat(elements[2]), parseFloat(elements[3]));
+		}
+		if(elements[0] == "Ks"){
+			data.ks.push(parseFloat(elements[1]), parseFloat(elements[2]), parseFloat(elements[3]));
+		}
+		if(elements[0] == "Kd"){
+			data.kd.push(parseFloat(elements[1]), parseFloat(elements[2]), parseFloat(elements[3]));
+		}
+	}
+	
+	return data;
+}

@@ -163,6 +163,10 @@ function initShaders() {
   
   // store location of uLightingDirection variable defined in shader
   shaderProgram.lightPositionUniform = gl.getUniformLocation(shaderProgram, "uLightPosition");
+  
+  shaderProgram.Ka = gl.getUniformLocation(shaderProgram, "Ka");
+  shaderProgram.Kd = gl.getUniformLocation(shaderProgram, "Kd");
+  shaderProgram.Ks = gl.getUniformLocation(shaderProgram, "Ks");
 }
 
 function setMatrixUniforms() {
@@ -232,6 +236,12 @@ function initBuffers(){
 			gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(object.vertexIndices), gl.STATIC_DRAW);
 			object.VertexIndexBuffer.itemSize = 1;
 			object.VertexIndexBuffer.numItems = data.fCount;
+			
+			loadMaterial("./assets/" + name + ".mtl", function(data){
+				object.ka = data.ka;
+				object.kd = data.kd;
+				object.ks = data.ks;
+			})
 			
 			objects.push(object);
 		});
