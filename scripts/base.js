@@ -26,27 +26,18 @@ Base.prototype.draw = function(translate, scale, rotate){
 	
 	mvPushMatrix();
 
-	// ZAENKRAT KAMERO PREMIKAMO SAMO V X,Z SMER
-	//mat4.rotate(mvMatrix, degToRad(-cameraRotation[2]), [0, 0, 1]);
-	//mat4.rotate(mvMatrix, degToRad(-cameraRotation[0]), [1, 0, 0]);
-	mat4.rotate(mvMatrix, degToRad(-cameraRotation[0]), [0, 1, 0]); // LEVO-DESNO OBRAT
+	mat4.rotate(mvMatrix, degToRad(-cameraRotation[2]), [1, 0, 0]); // GOR-DOL
+	mat4.rotate(mvMatrix, degToRad(-cameraRotation[0]), [0, 1, 0]); // LEVO-DESNO
 
-	mat4.translate(mvMatrix, [-cameraPosition[0], -cameraPosition[1], -cameraPosition[2]]);
-
-	translateX = objectPosition[0];
-	translateY = objectPosition[1];
-	translateZ = objectPosition[2];
+	mat4.translate(mvMatrix, [-cameraPosition[0], -cameraPosition[1]-jump_position, -cameraPosition[2]]);
 	
-	//mat4.translate(mvMatrix, translate); // dela
 	//mat4.scale(mvMatrix, scale[0], scale[1], scale[2]);
-	//mat4.translate(mvMatrix, [translateX,translateY,translateZ]); 
+
 	mat4.translate(mvMatrix, objectPosition); 
 	mat4.rotate(mvMatrix, degToRad(rotate[0]), [1, 0, 0]); 
 	mat4.rotate(mvMatrix, degToRad(rotate[1]), [0, 1, 0]);
 	mat4.rotate(mvMatrix, degToRad(rotate[2]), [0, 0, 1]);
-	
-
-		
+			
 	gl.bindBuffer(gl.ARRAY_BUFFER, this.VertexPositionBuffer);
 	gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, this.VertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
 	  

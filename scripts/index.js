@@ -13,27 +13,22 @@ var objectsName = ["kljuc_tex"]; //["kocka_test"]// //,"cev", "el_omarica", "klj
 var angleSpeed = 0.8;
 var movingSpeed = 0.1;
 
-var angle = 0;
+var angleX = 0; // LEFT-RIGHT angle
+var angleY = 0; // UP-DOWN angle
 var speedZ = 0;
 var speedX = 0;
 
+var jump = false;
+var jump_position = 0; // DONT CHANGE - VAR
+var jump_height = 1;   // CONST
+var jump_speed = 4; // CONST
+var jump_duration = 1; // DONT CHANGE - VAR
 
 var cameraPosition = [0.0, 0.0, 7.0]; // ZAČETNA POZICIJA KAMERE (se spreminja s časom)
 var cameraRotation = [0, 0, 0];
 
-
 var objectScaling = [1.0, 1.0, 1.0];
 var objectPosition = [0.0, 0.0, 3.0]; // POZICIJA OBJEKTA V SVETU (se ne spreminja s časom)
-
-/*
-var mouseX = 0;
-var mouseY = 0;
-var mouseDiffX = 0; // RAZLIKA MED PREMIKOM MISKE 
-var mouseDiffY = 0;
-var mouseSensitivity = 0.06;
-var dx = 0;
-var dy = 0;
-*/
 
 function mvPushMatrix() {
   var copy = mat4.create();
@@ -251,17 +246,6 @@ function initBuffers(){
 }
 
 function drawScene() {
-  
-  cameraRotation[0] -= angle;
-
-  if (speedZ != 0) {	
-    cameraPosition[0] -= Math.sin(degToRad(cameraRotation[0])) * speedZ; // positionX
-	cameraPosition[2] -= Math.cos(degToRad(cameraRotation[0])) * speedZ; // positionZ
-  }
-  if (speedX != 0) {  
-    cameraPosition[0] -= Math.cos(degToRad(-cameraRotation[0])) * speedX; // positionX
-	cameraPosition[2] -= Math.sin(degToRad(-cameraRotation[0])) * speedX; // positionZ
-  }
 	
 	var i = 0;
 	// set the rendering environment to full canvas size
@@ -279,8 +263,33 @@ function drawScene() {
   // the center of the scene.
 	mat4.identity(mvMatrix);
   
+	playerControl();
 	objects[i].draw(objectPosition, [1.0, 1.0, 1.0], [rotateObj, rotateObj, rotateObj]);
   
+}
+
+function playerControl(){
+  
+  cameraRotation[0] -= angleX;
+  cameraRotation[2] -= angleY;
+  
+  if (speedZ != 0) {	
+    cameraPosition[0] -= Math.sin(degToRad(cameraRotation[0])) * speedZ; // positionX
+	cameraPosition[2] -= Math.cos(degToRad(cameraRotation[0])) * speedZ; // positionZ
+  }
+  if (speedX != 0) {  
+    cameraPosition[0] -= Math.cos(degToRad(-cameraRotation[0])) * speedX; // positionX
+	cameraPosition[2] -= Math.sin(degToRad(-cameraRotation[0])) * speedX; // positionZ
+  }
+  if( jump ){
+	jump_position = Math.sin(degToRad(jump_duration));
+	jump_duration += jump_speed;
+	if( jump_duration >= 180 ){
+		jump_position = 0;
+		jump_duration = 0;
+		jump = false;
+	} 
+  }
 }
 
 function texturesLoaded(){

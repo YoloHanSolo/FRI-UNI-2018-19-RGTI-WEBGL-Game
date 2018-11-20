@@ -23,10 +23,21 @@ function handleKeys() {
 	}else
 		speedX = 0;
 	
-	if (currentlyPressedKeys[81]) {	// KEY PRESS (Q)
-		angle = -angleSpeed;
-	}else if(currentlyPressedKeys[69]) { // KEY PRESS (E)
-		angle = angleSpeed;
+	if (currentlyPressedKeys[37]) {	// KEY PRESS (LEFT ARROW)
+		angleX = -angleSpeed;
+	}else if(currentlyPressedKeys[39]) { // KEY PRESS (RIGHT ARROW)
+		angleX = angleSpeed;
 	}else
-		angle = 0;
+		angleX = 0;
+	
+	if (currentlyPressedKeys[38]) {	// KEY PRESS (UP ARROW )
+		angleY = -angleSpeed;
+	}else if(currentlyPressedKeys[40]) { // KEY PRESS (DOWN ARROW)
+		angleY = angleSpeed;
+	}else
+		angleY = 0;
+	
+	if (currentlyPressedKeys[32] && !jump) // SPACE (JUMP)
+		jump = true;
+		
 }
