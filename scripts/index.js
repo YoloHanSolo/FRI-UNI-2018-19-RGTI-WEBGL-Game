@@ -8,7 +8,7 @@ var pMatrix = mat4.create();
 
 var objects = [];
 
-var objectsName = ["kljuc_tex"]; //["kocka_test"]// //,"cev", "el_omarica", "kljuc", "lestev", "luc", "resetke", "sod", "ventil", "vrata", "zelezna_vrata"];
+var objectsName = ["kljuc_tex","kljuc_tex","kljuc_tex","kocka_test"]; //"cev", "el_omarica", "kljuc", "lestev", "luc", "resetke", "sod", "ventil", "vrata", "zelezna_vrata"];
 
 var angleSpeed = 1.3;
 var movingSpeed = 0.1;
@@ -27,8 +27,9 @@ var jump_duration = 1; // DONT CHANGE - VAR
 var cameraPosition = [0.0, 0.0, 7.0]; // ZAČETNA POZICIJA KAMERE (se spreminja s časom)
 var cameraRotation = [0, 0, 0];
 
-var objectScaling = [1.0, 1.0, 1.0];
-var objectPosition = [0.0, 0.0, 3.0]; // POZICIJA OBJEKTA V SVETU (se ne spreminja s časom)
+var objectPosition = [1.0, 1.0, 1.0];
+
+var objectScaling = [1.0, 1.0, 1.0]; // POZICIJA OBJEKTA V SVETU (se ne spreminja s časom)
 
 function mvPushMatrix() {
   var copy = mat4.create();
@@ -247,7 +248,6 @@ function initBuffers(){
 
 function drawScene() {
 	
-	var i = 0;
 	// set the rendering environment to full canvas size
 	gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
 	// Clear the canvas before we start drawing on it.
@@ -259,13 +259,17 @@ function drawScene() {
 	// and 100 units away from the camera.
 	mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);
 
-  // Set the drawing position to the "identity" point, which is
-  // the center of the scene.
 	mat4.identity(mvMatrix);
-  
-	playerControl();
-	objects[i].draw(objectPosition, [1.0, 1.0, 1.0], [rotateObj, rotateObj, rotateObj]);
-  
+	
+	mat4.rotate(mvMatrix, degToRad(-cameraRotation[2]), [1, 0, 0]); // GOR-DOL
+	mat4.rotate(mvMatrix, degToRad(-cameraRotation[0]), [0, 1, 0]); // LEVO-DESNO
+
+	mat4.translate(mvMatrix, [-cameraPosition[0], -cameraPosition[1]-jump_position, -cameraPosition[2]]);
+	
+	for( let i = 0; i < objectsName.length; i++){ 
+		objectPosition[1] = 2*i-2;	
+		objects[i].draw(objectPosition, [1.0, 1.0, 1.0], [rotateObj, rotateObj, rotateObj]);
+	}
 }
 
 function playerControl(){
@@ -334,6 +338,7 @@ function start() {
       //requestAnimationFrame(animate);
 	  if (texturesLoaded) {
 		  handleKeys();
+		  playerControl();
 		  drawScene();
 	  }
     }, 15);
