@@ -13,7 +13,7 @@ h1 {
 }
 
 h2 {
-	text-align: left;
+	text-align: center;
 }
 
 ul {
@@ -30,4 +30,11 @@ td {
 	left:150px;
 	font-size:2em;
 	color: white;
+}
+
+#credits{
+	position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

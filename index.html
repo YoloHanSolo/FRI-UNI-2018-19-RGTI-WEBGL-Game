@@ -82,8 +82,18 @@
 			</canvas>
 			<div id ="mainMenu" style="text-align: center; position: relative;" width="1280px" height="720px">
 				<img src="./assets/mainMenu.gif" width="1280px" height="720px">
-				<button type="button" style="position: absolute; top: 45%; left: 43%; height:50px; width:256px;" onclick="startGame()">START</button>
-				<button type="button" style="position: absolute; top: 55%; left: 43%; height:50px; width:256px;">CREDITS</button>
+				<div id="main">
+					<button type="button" style="position: absolute; top: 45%; left: 43%; height:50px; width:256px;" onclick="startGame()">START</button>
+					<button type="button" style="position: absolute; top: 55%; left: 43%; height:50px; width:256px;" onclick="showCredits()">CREDITS</button>
+				</div>
+				<div id="credits" style="display: none" width="1280px" height="720px">
+					<h2>Developers</h2>
+					<h3>Jan Pelicon</h3>
+					<h3>Mitja Maren</h3>
+					<h2>Graphical Designer</h2>
+					<h3>David Bogataj</h3>
+					<button type="button" style="position: absolute; top: 50%; left: 40%; height:50px; width:256px;" onclick="goBack()">BACK</button>
+				</div>
 			</div>
 			
 			<br />
