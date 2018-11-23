@@ -31,6 +31,8 @@ var objectPosition = [1.0, 1.0, 1.0];
 
 var objectScaling = [1.0, 1.0, 1.0]; // POZICIJA OBJEKTA V SVETU (se ne spreminja s časom)
 
+var gameStart = false;
+
 function mvPushMatrix() {
   var copy = mat4.create();
   mat4.set(mvMatrix, copy);
@@ -300,15 +302,6 @@ function playerControl(){
   
 }
 
-
-function texturesLoaded(){
-	for(var i = 0; i < objects.length; i++){
-		if(!objects[i].textureReady)
-			return false;
-	}
-	return true;
-}
-
 function start() {
   canvas = document.getElementById("glcanvas");
 
@@ -336,7 +329,7 @@ function start() {
     // Set up to draw the scene periodically.
     setInterval(function() {
       //requestAnimationFrame(animate);
-	  if (texturesLoaded) {
+	  if (gameStart) {
 		  handleKeys();
 		  playerControl();
 		  drawScene();
