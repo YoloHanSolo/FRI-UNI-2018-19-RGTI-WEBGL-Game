@@ -8,7 +8,7 @@ var pMatrix = mat4.create();
 
 var objects = [];
 
-var objectsName = ["kljuc_tex","kljuc_tex","kljuc_tex","kocka_test"]; //"cev", "el_omarica", "kljuc", "lestev", "luc", "resetke", "sod", "ventil", "vrata", "zelezna_vrata"];
+var objectsName = ["kljuc_tex","kljuc_tex","kljuc_tex"]; //"cev", "el_omarica", "kljuc", "lestev", "luc", "resetke", "sod", "ventil", "vrata", "zelezna_vrata"];
 
 var angleSpeed = 1.3;
 var movingSpeed = 0.1;
@@ -189,7 +189,7 @@ function handleTextureLoaded(texture) {
 
 function initBuffers(){
 	for(var i = 0; i < objectsName.length; i++){
-		loadObject("./assets/" + objectsName[i] + ".obj", objectsName[i], function(data, name){
+		loadObject("./assets_models/" + objectsName[i] + ".obj", objectsName[i], function(data, name){
 			var object = new Base();
 			object.name = name;
 			object.VertexPositionBuffer = gl.createBuffer();
@@ -217,7 +217,7 @@ function initBuffers(){
 			object.texture.image.onload = function(){
 				handleTextureLoaded(object.texture);
 			}
-			object.texture.image.src = "./assets/" + name + ".jpg";
+			object.texture.image.src = "./assets_models/" + name + ".jpg";
 			
 			object.VertexNormalBuffer = gl.createBuffer();
 			gl.bindBuffer(gl.ARRAY_BUFFER, object.VertexNormalBuffer);
@@ -235,7 +235,7 @@ function initBuffers(){
 			object.VertexIndexBuffer.itemSize = 1;
 			object.VertexIndexBuffer.numItems = data.fCount;
 			
-			loadMaterial("./assets/" + name + ".mtl", function(data){
+			loadMaterial("./assets_models/" + name + ".mtl", function(data){
 				object.ka = data.ka;
 				object.kd = data.kd;
 				object.ks = data.ks;

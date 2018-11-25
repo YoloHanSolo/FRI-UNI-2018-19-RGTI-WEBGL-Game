@@ -4,7 +4,7 @@ function startGame(){
 	document.getElementById("mainMenu").style.display = 'none';
 	document.getElementById("glcanvas").style.display = 'inline';
 	
-	var audio = new Audio("./assets/game.mp3");
+	var audio = new Audio("./assets_other/game.mp3");
 	audio.volume = 0.3;
 	audio.addEventListener('ended', function() {
 		this.currentTime = 0;
