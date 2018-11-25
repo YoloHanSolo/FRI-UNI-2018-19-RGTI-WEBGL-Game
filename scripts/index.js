@@ -8,7 +8,9 @@ var pMatrix = mat4.create();
 
 var objects = [];
 
-var objectsName = ["kljuc_tex","kljuc_tex","kljuc_tex"]; //"cev", "el_omarica", "kljuc", "lestev", "luc", "resetke", "sod", "ventil", "vrata", "zelezna_vrata"];
+var objectsName = ["kljuc_tex","kanal_1"]; //"cev", "el_omarica", "kljuc", "lestev", "luc", "resetke", "sod", "ventil", "vrata", "zelezna_vrata"];
+var objectPosition = [[1.0, 1.0, 1.0],[40.0, -8.0, 0.0]];
+var objectRotation = [[0.0, 0.0, 0.0],[0.0, 90.0, 0.0]];
 
 var angleSpeed = 1.3;
 var movingSpeed = 0.1;
@@ -26,8 +28,6 @@ var jump_duration = 1; // DONT CHANGE - VAR
 
 var cameraPosition = [0.0, 0.0, 7.0]; // ZAČETNA POZICIJA KAMERE (se spreminja s časom)
 var cameraRotation = [0, 0, 0];
-
-var objectPosition = [1.0, 1.0, 1.0];
 
 var objectScaling = [1.0, 1.0, 1.0]; // POZICIJA OBJEKTA V SVETU (se ne spreminja s časom)
 
@@ -269,8 +269,7 @@ function drawScene() {
 	mat4.translate(mvMatrix, [-cameraPosition[0], -cameraPosition[1]-jump_position, -cameraPosition[2]]);
 	
 	for( let i = 0; i < objectsName.length; i++){ 
-		objectPosition[1] = 2*i-2;	
-		objects[i].draw(objectPosition, [1.0, 1.0, 1.0], [rotateObj, rotateObj, rotateObj]);
+		objects[i].draw(objectPosition[i], [1.0, 1.0, 1.0], objectRotation[i]);
 	}
 }
 

@@ -24,11 +24,11 @@ function Base(){
 Base.prototype.draw = function(translate, scale, rotate){	
 	mvPushMatrix();
 
-	mat4.translate(mvMatrix, objectPosition); 
 	mat4.rotate(mvMatrix, degToRad(rotate[0]), [1, 0, 0]); 
 	mat4.rotate(mvMatrix, degToRad(rotate[1]), [0, 1, 0]);
 	mat4.rotate(mvMatrix, degToRad(rotate[2]), [0, 0, 1]);
-			
+	mat4.translate(mvMatrix, translate); 
+	
 	// Specify the texture to map onto the faces.
 	gl.activeTexture(gl.TEXTURE0);
 	gl.bindTexture(gl.TEXTURE_2D, this.texture);
