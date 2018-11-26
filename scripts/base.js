@@ -1,5 +1,3 @@
-var rotateObj = 0;
-
 function Base(){
 	this.VertexPositionBuffer;
 	this.VertexColorBuffer;
@@ -34,7 +32,7 @@ Base.prototype.draw = function(translate, scale, rotate){
 	gl.bindTexture(gl.TEXTURE_2D, this.texture);
 	
 	gl.uniform1i(shaderProgram.samplerUniform, 0);	
-	gl.uniform3fv(shaderProgram.lightPositionUniform, cameraPosition);
+	gl.uniform3fv(shaderProgram.lightPositionUniform, [cameraPosition[0]+0.5, cameraPosition[1], cameraPosition[2]]);
 	
 	if(this.ka != undefined)
 		gl.uniform3fv(shaderProgram.Ka, this.ka);

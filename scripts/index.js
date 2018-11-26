@@ -8,9 +8,19 @@ var pMatrix = mat4.create();
 
 var objects = [];
 
-var objectsName = ["kljuc_tex","kanal_1"]; //"cev", "el_omarica", "kljuc", "lestev", "luc", "resetke", "sod", "ventil", "vrata", "zelezna_vrata"];
-var objectPosition = [[1.0, 1.0, 1.0],[40.0, -8.0, 0.0]];
-var objectRotation = [[0.0, 0.0, 0.0],[0.0, 90.0, 0.0]];
+var objectsName = ["map","bars","ventil","small_pipe"]; //"cev", "el_omarica", "kljuc", "lestev", "luc", "resetke", "sod", "ventil", "vrata", "zelezna_vrata"];
+var objectPosition = [
+	[0.0, 0.0, 0.0],
+	[8.2, 0.0, 0.0],
+	[2.0, -3.7, 4.2],
+	[4.2, 2.0,-3.7]];
+
+
+var objectRotation = [
+	[0.0, 0.0, 0.0],
+	[0.0, 0.0, 0.0],
+	[0.0, 90.0, 90.0],
+	[0.0, 0.0, 0.0]];
 
 var angleSpeed = 1.3;
 var movingSpeed = 0.1;
@@ -26,8 +36,8 @@ var jump_height = 1;   // CONST
 var jump_speed = 4; // CONST
 var jump_duration = 1; // DONT CHANGE - VAR
 
-var cameraPosition = [0.0, 0.0, 7.0]; // ZAČETNA POZICIJA KAMERE (se spreminja s časom)
-var cameraRotation = [0, 0, 0];
+var cameraPosition = [0.0, -2.0, 0.0]; // ZAČETNA POZICIJA KAMERE (se spreminja s časom)
+var cameraRotation = [0.0, 0.0, 0.0];
 
 var objectScaling = [1.0, 1.0, 1.0]; // POZICIJA OBJEKTA V SVETU (se ne spreminja s časom)
 
@@ -189,7 +199,7 @@ function handleTextureLoaded(texture) {
 
 function initBuffers(){
 	for(var i = 0; i < objectsName.length; i++){
-		loadObject("./assets_models/" + objectsName[i] + ".obj", objectsName[i], function(data, name){
+		loadObject("./assets_models/" + objectsName[i] + "/" + objectsName[i] + ".obj", objectsName[i], function(data, name){
 			var object = new Base();
 			object.name = name;
 			object.VertexPositionBuffer = gl.createBuffer();
@@ -217,7 +227,7 @@ function initBuffers(){
 			object.texture.image.onload = function(){
 				handleTextureLoaded(object.texture);
 			}
-			object.texture.image.src = "./assets_models/" + name + ".jpg";
+			object.texture.image.src = "./assets_models/" + name + "/" + name + ".jpg";
 			
 			object.VertexNormalBuffer = gl.createBuffer();
 			gl.bindBuffer(gl.ARRAY_BUFFER, object.VertexNormalBuffer);
@@ -235,7 +245,7 @@ function initBuffers(){
 			object.VertexIndexBuffer.itemSize = 1;
 			object.VertexIndexBuffer.numItems = data.fCount;
 			
-			loadMaterial("./assets_models/" + name + ".mtl", function(data){
+			loadMaterial("./assets_models/" + name + "/" + name + ".mtl", function(data){
 				object.ka = data.ka;
 				object.kd = data.kd;
 				object.ks = data.ks;
@@ -266,40 +276,12 @@ function drawScene() {
 	mat4.rotate(mvMatrix, degToRad(-cameraRotation[2]), [1, 0, 0]); // GOR-DOL
 	mat4.rotate(mvMatrix, degToRad(-cameraRotation[0]), [0, 1, 0]); // LEVO-DESNO
 
-	mat4.translate(mvMatrix, [-cameraPosition[0], -cameraPosition[1]-jump_position, -cameraPosition[2]]);
+	mat4.translate(mvMatrix, [cameraPosition[0], cameraPosition[1]-jump_position, cameraPosition[2]]);
 	
 	for( let i = 0; i < objectsName.length; i++){ 
+	
 		objects[i].draw(objectPosition[i], [1.0, 1.0, 1.0], objectRotation[i]);
-		raycast(cameraPosition, cameraRotation, objectPosition[0], objects[0]);
 	}
-}
-
-function playerControl(){
-
-  cameraRotation[0] -= angleX;
-  cameraRotation[2] -= angleY;
-  
-  if( cameraRotation[2] >= 180 ) cameraRotation[2] = 180;
-  if( cameraRotation[2] <=-180 ) cameraRotation[2] = -180;
-  
-  if (speedZ != 0) {	
-    cameraPosition[0] -= Math.sin(degToRad(cameraRotation[0])) * speedZ; // positionX
-	cameraPosition[2] -= Math.cos(degToRad(cameraRotation[0])) * speedZ; // positionZ
-  }
-  if (speedX != 0) {  
-    cameraPosition[0] -= Math.cos(degToRad(-cameraRotation[0])) * speedX; // positionX
-	cameraPosition[2] -= Math.sin(degToRad(-cameraRotation[0])) * speedX; // positionZ
-  }
-  if( jump ){
-	jump_position = Math.sin(degToRad(jump_duration));
-	jump_duration += jump_speed;
-	if( jump_duration >= 180 ){
-		jump_position = 0;
-		jump_duration = 0;
-		jump = false;
-	} 
-  }
-  
 }
 
 function start() {
