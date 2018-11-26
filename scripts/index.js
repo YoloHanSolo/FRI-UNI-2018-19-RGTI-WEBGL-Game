@@ -270,6 +270,7 @@ function drawScene() {
 	
 	for( let i = 0; i < objectsName.length; i++){ 
 		objects[i].draw(objectPosition[i], [1.0, 1.0, 1.0], objectRotation[i]);
+		raycast(cameraPosition, cameraRotation, objectPosition[0], objects[0]);
 	}
 }
 
