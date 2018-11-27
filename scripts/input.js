@@ -9,9 +9,9 @@ function handleKeyUp(event) {
 }
 
 function handleKeys() {
-	if (currentlyPressedKeys[87]) { // KEY PRESS (W)
+	if (currentlyPressedKeys[83]) { // KEY PRESS (S)
 		speedZ = -movingSpeed;
-	}else if(currentlyPressedKeys[83]) { // KEY PRESS (S)
+	}else if(currentlyPressedKeys[87]) { // KEY PRESS (W)
 		speedZ = movingSpeed;
 	}else
 		speedZ = 0;
@@ -24,16 +24,16 @@ function handleKeys() {
 		speedX = 0;
 	
 	if (currentlyPressedKeys[37]) {	// KEY PRESS (LEFT ARROW)
-		angleX = -angleSpeed;
-	}else if(currentlyPressedKeys[39]) { // KEY PRESS (RIGHT ARROW)
 		angleX = angleSpeed;
+	}else if(currentlyPressedKeys[39]) { // KEY PRESS (RIGHT ARROW)
+		angleX = -angleSpeed;
 	}else
 		angleX = 0;
 	
 	if (currentlyPressedKeys[38]) {	// KEY PRESS (UP ARROW )
-		angleY = -angleSpeed;
-	}else if(currentlyPressedKeys[40]) { // KEY PRESS (DOWN ARROW)
 		angleY = angleSpeed;
+	}else if(currentlyPressedKeys[40]) { // KEY PRESS (DOWN ARROW)
+		angleY = -angleSpeed;
 	}else
 		angleY = 0;
 	
@@ -44,19 +44,19 @@ function handleKeys() {
 
 function playerControl(){
 
-  cameraRotation[0] -= angleX;
-  cameraRotation[2] -= angleY;
+  cameraRotation[0] += angleX;
+  cameraRotation[2] += angleY;
   
-  if( cameraRotation[2] >= 180 ) cameraRotation[2] = 180;
-  if( cameraRotation[2] <=-180 ) cameraRotation[2] = -180;
+  if( cameraRotation[2] >= 90 ) cameraRotation[2] = 90;
+  if( cameraRotation[2] <=-90 ) cameraRotation[2] = -90;
   
   if (speedZ != 0) {	
-    cameraPosition[0] -= Math.sin(degToRad(cameraRotation[0])) * speedZ; // positionX
-	cameraPosition[2] -= Math.cos(degToRad(cameraRotation[0])) * speedZ; // positionZ
+    cameraPosition[0] += Math.sin(degToRad(cameraRotation[0])) * speedZ; // positionX
+	cameraPosition[2] += Math.cos(degToRad(cameraRotation[0])) * speedZ; // positionZ
   }
   if (speedX != 0) {  
-    cameraPosition[0] -= Math.cos(degToRad(-cameraRotation[0])) * speedX; // positionX
-	cameraPosition[2] -= Math.sin(degToRad(-cameraRotation[0])) * speedX; // positionZ
+    cameraPosition[2] -= Math.sin(degToRad(-cameraRotation[0])) * speedX; // positionX
+	cameraPosition[0] -= Math.cos(degToRad(-cameraRotation[0])) * speedX; // positionZ
   }
   if( jump ){
 	jump_position = Math.sin(degToRad(jump_duration));
