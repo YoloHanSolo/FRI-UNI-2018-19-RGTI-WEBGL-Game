@@ -13,7 +13,6 @@ function Base(){
 	
 	this.name;
 	
-	//Material
 	this.ka;
 	this.kd;
 	this.ks;
@@ -22,17 +21,19 @@ function Base(){
 Base.prototype.draw = function(translate, scale, rotate){	
 	mvPushMatrix();
 
+	mat4.translate(mvMatrix, translate); 
+	
 	mat4.rotate(mvMatrix, degToRad(rotate[0]), [1, 0, 0]); 
 	mat4.rotate(mvMatrix, degToRad(rotate[1]), [0, 1, 0]);
 	mat4.rotate(mvMatrix, degToRad(rotate[2]), [0, 0, 1]);
-	mat4.translate(mvMatrix, translate); 
 	
-	// Specify the texture to map onto the faces.
+	// TEXTURES & LIGHT
+	
 	gl.activeTexture(gl.TEXTURE0);
 	gl.bindTexture(gl.TEXTURE_2D, this.texture);
 	
 	gl.uniform1i(shaderProgram.samplerUniform, 0);	
-	gl.uniform3fv(shaderProgram.lightPositionUniform, [cameraPosition[0]+0.5, cameraPosition[1], cameraPosition[2]]);
+	gl.uniform3fv(shaderProgram.lightPositionUniform, [cameraPosition[0], cameraPosition[1], cameraPosition[2]]);
 	
 	if(this.ka != undefined)
 		gl.uniform3fv(shaderProgram.Ka, this.ka);

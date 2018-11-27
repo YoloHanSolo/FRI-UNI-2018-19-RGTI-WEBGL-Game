@@ -1,4 +1,3 @@
-// Global variable definitionvar canvas;
 var gl;
 var shaderProgram;
 
@@ -8,20 +7,45 @@ var pMatrix = mat4.create();
 
 var objects = [];
 
-var objectsName = ["map","bars","ventil","small_pipe"]; //"cev", "el_omarica", "kljuc", "lestev", "luc", "resetke", "sod", "ventil", "vrata", "zelezna_vrata"];
+var objectsName = [
+	"map","map_intersection",
+	"bars","bars",
+	"ventil","ventil","ventil",
+	"small_pipe","small_pipe","small_pipe","small_pipe"
+	];
+	
+var water_alpha = false;
+
 var objectPosition = [
-	[0.0, 0.0, 0.0],
-	[8.2, 0.0, 0.0],
-	[2.0, -3.7, 4.2],
-	[4.2, 2.0,-3.7]];
-
-
+	[ 0.0, 0.0, 0.0],
+	[ 0.0, 0.0, 0.0],
+	[ 8.0,-1.0, 0.1],
+	[-4.0,-1.0, 0.1],
+	// VALVE
+	[ 0.0, 1.0,-0.4],
+	[ 1.0, 1.0,-0.4],
+	[ 3.0, 3.0,-1.2],
+	// SMALL PIPE
+	[ 0.5, 1.0,-0.4],
+	[ 0.0, 1.0,-0.4],
+	[ 1.0, 1.0,-0.4],
+	[ 3.0, 3.0, -1.5]];
+	
 var objectRotation = [
-	[0.0, 0.0, 0.0],
-	[0.0, 0.0, 0.0],
-	[0.0, 90.0, 90.0],
-	[0.0, 0.0, 0.0]];
-
+	[ 0.0, 0.0, 0.0],
+	[ 0.0, 0.0, 0.0],
+	[ 0.0,90.0, 0.0],
+	[ 0.0,90.0, 0.0],
+	// VALVE
+	[ 0.0,-90.0, 90.0],
+	[ 0.0,-90.0, 90.0],
+	[ 0.0,  0.0, 90.0],
+	// SMALL PIPE
+	[ 0.0, 0.0, 0.0],
+	[ 0.0, 0.0, 0.0],
+	[ 0.0, 0.0, 0.0],
+	[ 0.0,90.0, 90.0]];
+	
 var angleSpeed = 1.3;
 var movingSpeed = 0.1;
 
@@ -254,7 +278,7 @@ function initBuffers(){
 			objects.push(object);
 		});
 	}
-	console.log(objects)
+	//console.log(objects)
 	// PRINT OBJ // file:///C:/Users/Uporabnik/Desktop/RGTI-Seminarska-master/index.html.log(objects)
 }
 
@@ -279,7 +303,6 @@ function drawScene() {
 	mat4.translate(mvMatrix, [cameraPosition[0], cameraPosition[1]-jump_position, cameraPosition[2]]);
 	
 	for( let i = 0; i < objectsName.length; i++){ 
-	
 		objects[i].draw(objectPosition[i], [1.0, 1.0, 1.0], objectRotation[i]);
 	}
 }
