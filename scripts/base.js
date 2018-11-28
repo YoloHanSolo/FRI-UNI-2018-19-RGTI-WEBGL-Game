@@ -33,7 +33,8 @@ Base.prototype.draw = function(translate, scale, rotate){
 	gl.bindTexture(gl.TEXTURE_2D, this.texture);
 	
 	gl.uniform1i(shaderProgram.samplerUniform, 0);	
-	gl.uniform3fv(shaderProgram.lightPositionUniform, [cameraPosition[0], cameraPosition[1], cameraPosition[2]]);
+
+	gl.uniform3fv(shaderProgram.lightPositionUniform, [ 0, 0, 0]);
 	
 	if(this.ka != undefined)
 		gl.uniform3fv(shaderProgram.Ka, this.ka);

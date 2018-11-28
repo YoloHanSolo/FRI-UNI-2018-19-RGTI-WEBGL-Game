@@ -49,7 +49,3 @@ function collision(){
 	online_prev = online;
 	oncross_prev = oncross;
 }
-
-setInterval(function() {
-	console.log(cameraPosition+" "+online+" "+oncross+" "+oncorner);
-}, 500);
