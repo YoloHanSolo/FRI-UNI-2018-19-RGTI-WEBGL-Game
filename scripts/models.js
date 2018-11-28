@@ -4,6 +4,7 @@ var objectsName = [
 	// GROUP x10
 	"small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe",
 	"small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe"
+	];
 
 var objectPosition = [
 	[ 0.0, 0.0, 0.0],
