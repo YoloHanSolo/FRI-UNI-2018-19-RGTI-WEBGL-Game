@@ -20,12 +20,12 @@ function Base(){
 
 Base.prototype.draw = function(translate, scale, rotate){	
 	mvPushMatrix();
-
-	mat4.translate(mvMatrix, translate); 
 	
 	mat4.rotate(mvMatrix, degToRad(rotate[0]), [1, 0, 0]); 
 	mat4.rotate(mvMatrix, degToRad(rotate[1]), [0, 1, 0]);
 	mat4.rotate(mvMatrix, degToRad(rotate[2]), [0, 0, 1]);
+	
+	mat4.translate(mvMatrix, translate); 
 	
 	// TEXTURES & LIGHT
 	

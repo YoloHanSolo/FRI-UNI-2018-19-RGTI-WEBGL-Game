@@ -6,45 +6,6 @@ var mvMatrix = mat4.create();
 var pMatrix = mat4.create();
 
 var objects = [];
-
-var objectsName = [
-	"map","map_intersection",
-	"bars","bars",
-	"ventil","ventil","ventil",
-	"small_pipe","small_pipe","small_pipe","small_pipe"
-	];
-	
-var water_alpha = false;
-
-var objectPosition = [
-	[ 0.0, 0.0, 0.0],
-	[ 0.0, 0.0, 0.0],
-	[ 8.0,-1.0, 0.1],
-	[-4.0,-1.0, 0.1],
-	// VALVE
-	[ 0.0, 1.0,-0.4],
-	[ 1.0, 1.0,-0.4],
-	[ 3.0, 3.0,-1.2],
-	// SMALL PIPE
-	[ 0.5, 1.0,-0.4],
-	[ 0.0, 1.0,-0.4],
-	[ 1.0, 1.0,-0.4],
-	[ 3.0, 3.0, -1.5]];
-	
-var objectRotation = [
-	[ 0.0, 0.0, 0.0],
-	[ 0.0, 0.0, 0.0],
-	[ 0.0,90.0, 0.0],
-	[ 0.0,90.0, 0.0],
-	// VALVE
-	[ 0.0,-90.0, 90.0],
-	[ 0.0,-90.0, 90.0],
-	[ 0.0,  0.0, 90.0],
-	// SMALL PIPE
-	[ 0.0, 0.0, 0.0],
-	[ 0.0, 0.0, 0.0],
-	[ 0.0, 0.0, 0.0],
-	[ 0.0,90.0, 90.0]];
 	
 var angleSpeed = 1.3;
 var movingSpeed = 0.1;
@@ -304,6 +265,7 @@ function drawScene() {
 	
 	for( let i = 0; i < objectsName.length; i++){ 
 		objects[i].draw(objectPosition[i], [1.0, 1.0, 1.0], objectRotation[i]);
+		raycast(cameraPosition, cameraRotation, objectPosition[i], objects[i]);
 	}
 }
 
