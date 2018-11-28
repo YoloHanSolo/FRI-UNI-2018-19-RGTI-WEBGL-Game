@@ -21,7 +21,7 @@ var jump_height = 1;   // CONST
 var jump_speed = 4; // CONST
 var jump_duration = 1; // DONT CHANGE - VAR
 
-var cameraPosition = [0.0, -2.0, 0.0]; // ZAČETNA POZICIJA KAMERE (se spreminja s časom)
+var cameraPosition = [0.0, -2.0, 2.0]; // ZAČETNA POZICIJA KAMERE (se spreminja s časom)
 var cameraRotation = [0.0, 0.0, 0.0];
 
 var objectScaling = [1.0, 1.0, 1.0]; // POZICIJA OBJEKTA V SVETU (se ne spreminja s časom)
@@ -299,6 +299,7 @@ function start() {
 	  if (gameStart) {
 		  handleKeys();
 		  playerControl();
+		  collision();
 		  drawScene();
 	  }
     }, 15);
