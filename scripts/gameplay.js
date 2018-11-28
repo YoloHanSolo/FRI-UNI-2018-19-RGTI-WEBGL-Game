@@ -25,15 +25,24 @@ function goBack(){
 	document.getElementById("main").style.display = 'inline';
 }
 
+function getInteractedItem(){
+	var interectedObject = null;
+	for(var i = 4; i < objects.length; i++){
+		interectedObject = raycast(cameraPosition, cameraRotation, objectPosition[i], objects[i]);
+		if(interectedObject != null)
+			console.log(interectedObject);
+	}
+}
+
 function raycast(cPosition, cRotation, oPosition, object){
-	var omega = [0.0, 0.0, 1.0]; //direction of raycast
+	var omega = [0.0, 0.0, -1.0]; //direction of raycast
 	var x = [];
 	
 	//console.log("c:" + cPosition)
 	//console.log("o:" + oPosition)
 	//calculate x (vector betwen object and camera)
 	for(var i = 0; i < 3; i++){
-		x[i] = -cPosition[i] - oPosition[i];
+		x[i] = cPosition[i] - oPosition[i];
 	}
 	//console.log("x:" + x);
 	
@@ -46,11 +55,16 @@ function raycast(cPosition, cRotation, oPosition, object){
 	//console.log(a);
 	var b = 2 * (vectorXvector(x, omega));
 	//console.log(b);
-	var c = vectorXvector(x, x) - 1;
+	var c = vectorXvector(x, x) - Math.pow(0.5, 2);
 	//console.log(c);
 	
 	var D = Math.pow(b, 2) - 4 * a * c;
 	//console.log(D);
+	
+	if(D > 0)
+		return object;
+	else
+		return null;
 }
  function vectorXvector(v1, v2){
 	var result = 0;

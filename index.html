@@ -35,7 +35,7 @@
 				vec3 lightDirection = normalize(uLightPosition - vPosition.xyz);
 				
 				float d = length(uLightPosition - vPosition.xyz);
-				float fd = 8.0 / (1.0 + 0.001 * d + 0.001 * pow(d, 4.7));
+				float fd = 2.0 / (1.0 + 0.01 * d + 0.01 * pow(d, 2.0));
 				//razpršeni odboj
 				vec3 diffuseReflection = Kd * lightColor * max(dot(vTransformedNormal, lightDirection), 0.0);
 				

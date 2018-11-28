@@ -265,7 +265,6 @@ function drawScene() {
 	
 	for( let i = 0; i < objectsName.length; i++){ 
 		objects[i].draw(objectPosition[i], [1.0, 1.0, 1.0], objectRotation[i]);
-		raycast(cameraPosition, cameraRotation, objectPosition[i], objects[i]);
 	}
 }
 
@@ -303,5 +302,8 @@ function start() {
 		  drawScene();
 	  }
     }, 15);
+	setInterval(function(){
+		console.log("qwe")
+	}, 2000)
   }
 }
