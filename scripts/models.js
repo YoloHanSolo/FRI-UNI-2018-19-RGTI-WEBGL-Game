@@ -3,7 +3,7 @@ var objectsName = [
 	
 	// GROUP x10
 	"small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe",
-	"small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe"
+	"small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe",
 	];
 
 var objectPosition = [
@@ -30,7 +30,11 @@ var objectPosition = [
 	[-0.2, -3.95,-3.1],
 	[ 2.0, 1.55, -2.0],
 	[ 2.4, 1.55, -2.0],	
-	[ 2.8, 1.55, -2.0]
+	[ 2.8, 1.55, -2.0],
+	
+	//BARS
+	[ 0.0, 1.0, 0.0],
+	[ 0.0, 0.0, 0.0]
 	];
 
 	
@@ -59,6 +63,10 @@ var objectRotation = [
 	[90.0, 0.0, 0.0],
 	[90.0, 0.0, 0.0],
 	[90.0, 0.0, 0.0]
+	
+	// BARS
+	[ 0.0, 0.0, 0.0],
+	[ 0.0, 0.0, 0.0]
 	];	
 		
 		

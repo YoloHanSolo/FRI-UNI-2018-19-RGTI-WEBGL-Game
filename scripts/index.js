@@ -21,7 +21,7 @@ var jump_height = 1;   // CONST
 var jump_speed = 4; // CONST
 var jump_duration = 1; // DONT CHANGE - VAR
 
-var cameraPosition = [0.0, -2.0, 2.0]; // ZAČETNA POZICIJA KAMERE (se spreminja s časom)
+var cameraPosition = [2.0, 2.0, -2.0]; // ZAČETNA POZICIJA KAMERE (se spreminja s časom)
 var cameraRotation = [0.0, 0.0, 0.0];
 
 var objectScaling = [1.0, 1.0, 1.0]; // POZICIJA OBJEKTA V SVETU (se ne spreminja s časom)
@@ -261,7 +261,7 @@ function drawScene() {
 	mat4.rotate(mvMatrix, degToRad(-cameraRotation[2]), [1, 0, 0]); // GOR-DOL
 	mat4.rotate(mvMatrix, degToRad(-cameraRotation[0]), [0, 1, 0]); // LEVO-DESNO
 
-	mat4.translate(mvMatrix, [cameraPosition[0], cameraPosition[1]-jump_position, cameraPosition[2]]);
+	mat4.translate(mvMatrix, [-cameraPosition[0], -cameraPosition[1]-jump_position, -cameraPosition[2]]);
 	
 	for( let i = 0; i < objectsName.length; i++){ 
 		objects[i].draw(objectPosition[i], [1.0, 1.0, 1.0], objectRotation[i]);
