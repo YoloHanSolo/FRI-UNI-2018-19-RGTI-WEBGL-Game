@@ -7,7 +7,7 @@ var objectsName = [
 	
 	"small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe",
 	"small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe",
-	"small_pipe","small_pipe"
+	"small_pipe","small_pipe", "kljuc_tex"
 
 	];
 
@@ -43,7 +43,8 @@ var objectPosition = [
 	[ 3.1, 14.5, 6.4],
 	
 	[ 3.1, 18.5, 6.0],
-	[ 3.1, 18.5, 6.4]
+	[ 3.1, 18.5, 6.4],
+	[10.0, 2.0, -2.0]
 	];
 
 var objectRotation = [
@@ -79,7 +80,8 @@ var objectRotation = [
 	[90.0,90.0, 0.0],
 	
 	[90.0,90.0, 0.0],
-	[90.0,90.0, 0.0]
+	[90.0,90.0, 0.0],
+	[0.0, 0.0, 0.0]
 	];	
 		
 		

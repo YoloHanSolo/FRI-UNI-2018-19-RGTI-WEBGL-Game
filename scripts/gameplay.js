@@ -25,12 +25,24 @@ function goBack(){
 	document.getElementById("main").style.display = 'inline';
 }
 
+//GAMEPLAY FLAGS
+var hasKey = false;
+
 function getInteractedItem(){
 	var interectedObject = null;
-	for(var i = 4; i < objects.length; i++){
-		interectedObject = raycast(cameraPosition, cameraRotation, objectPosition[i], objects[i]);
+	for(var i = 0; i < objects.length; i++){
+		interectedObject = raycast(cameraPosition, cameraRotation, objects[i].translate, objects[i]);
 		if(interectedObject != null)
-			console.log(interectedObject);
+			interact(interectedObject, i);
+	}
+}
+
+function interact(obj, i){
+	if(obj.name == "kljuc_tex"){
+		hasKey = true;
+		objects[i] = objects[objects.length-1];
+		objects.pop();
+		//objects.splice(i, 1);
 	}
 }
 
@@ -55,11 +67,10 @@ function raycast(cPosition, cRotation, oPosition, object){
 	//console.log(a);
 	var b = 2 * (vectorXvector(x, omega));
 	//console.log(b);
-	var c = vectorXvector(x, x) - Math.pow(0.5, 2);
+	var c = vectorXvector(x, x) - Math.pow(1.0, 2);
 	//console.log(c);
 	
 	var D = Math.pow(b, 2) - 4 * a * c;
-	//console.log(D);
 	
 	if(D > 0)
 		return object;
