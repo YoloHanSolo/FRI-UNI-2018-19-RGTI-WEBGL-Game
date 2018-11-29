@@ -184,9 +184,11 @@ function handleTextureLoaded(texture) {
 
 function initBuffers(){
 	for(var i = 0; i < objectsName.length; i++){
-		loadObject("./assets_models/" + objectsName[i] + "/" + objectsName[i] + ".obj", objectsName[i], function(data, name){
+		loadObject("./assets_models/" + objectsName[i] + "/" + objectsName[i] + ".obj", objectsName[i], i, function(data, name, i){
 			var object = new Base();
 			object.name = name;
+			object.translate = objectPosition[i];
+			object.rotate	 = objectRotation[i];
 			object.VertexPositionBuffer = gl.createBuffer();
 			gl.bindBuffer(gl.ARRAY_BUFFER, object.VertexPositionBuffer);
 			
@@ -195,8 +197,8 @@ function initBuffers(){
 			object.VertexPositionBuffer.itemSize = 3;
 			object.VertexPositionBuffer.numItems = data.vCount;
 			
-			/*objects[0].VertexColorBuffer = gl.createBuffer();
-			gl.bindBuffer(gl.ARRAY_BUFFER, objects[0].VertexColorBuffer);*/
+			objects.VertexColorBuffer = gl.createBuffer();
+			gl.bindBuffer(gl.ARRAY_BUFFER, objects.VertexColorBuffer);
 			
 			object.VertexTextureCoordinateBuffer = gl.createBuffer();
 			gl.bindBuffer(gl.ARRAY_BUFFER, object.VertexTextureCoordinateBuffer);
@@ -235,12 +237,9 @@ function initBuffers(){
 				object.kd = data.kd;
 				object.ks = data.ks;
 			})
-			
 			objects.push(object);
 		});
 	}
-	//console.log(objects)
-	// PRINT OBJ // file:///C:/Users/Uporabnik/Desktop/RGTI-Seminarska-master/index.html.log(objects)
 }
 
 function drawScene() {
@@ -264,7 +263,7 @@ function drawScene() {
 	mat4.translate(mvMatrix, [-cameraPosition[0], -cameraPosition[1]-jump_position, -cameraPosition[2]]);
 	
 	for( let i = 0; i < objectsName.length; i++){ 
-		objects[i].draw(objectPosition[i], [1.0, 1.0, 1.0], objectRotation[i]);
+		objects[i].draw(objects[i].translate, [1.0, 1.0, 1.0], objects[i].rotate);
 	}
 }
 
@@ -297,9 +296,9 @@ function start() {
       //requestAnimationFrame(animate);
 	  if (gameStart) {
 		  handleKeys();
+		  drawScene();
 		  playerControl();
 		  collision();
-		  drawScene();
 	  }
     }, 15);
 	setInterval(function(){
