@@ -21,7 +21,7 @@
 			uniform sampler2D uSampler;
 			
 			uniform vec3 uLightPosition;	// light direction uniform
-			vec3 lightColor = vec3(1.0, 1.0, 1.0);
+			vec3 lightColor = vec3(1.0, 1.0, 5.0);
 			uniform vec3 Ka;
 			uniform vec3 Kd;
 			uniform vec3 Ks;
@@ -35,12 +35,15 @@
 				vec3 lightDirection = normalize(uLightPosition - vPosition.xyz);
 				
 				float d = length(uLightPosition - vPosition.xyz);
-				float fd = 2.0 / (1.0 + 0.01 * d + 0.01 * pow(d, 2.0));
+
+				float fd = 1.0 / (1.0 + 0.001 * d + 0.001 * pow(d, 5.0));
+
 				//razpršeni odboj
 				vec3 diffuseReflection = Kd * lightColor * max(dot(vTransformedNormal, lightDirection), 0.0);
 				
 				//zrcalni odboj
-				vec3 specularReflection = Ks * lightColor * pow(max(0.0, dot(reflect(lightDirection, vTransformedNormal), lightDirection)), 3.0);
+
+				vec3 specularReflection = Ks * lightColor * pow(max(0.0, dot(reflect(lightDirection, vTransformedNormal), lightDirection)), 5.0);
 				
 				vec3 lightWeighting = 0.2 * Ka + fd * (diffuseReflection + specularReflection);
 				
