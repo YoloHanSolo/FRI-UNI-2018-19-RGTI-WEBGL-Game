@@ -39,6 +39,9 @@ function handleKeys() {
 	
 	if (currentlyPressedKeys[32] && !jump) // SPACE (JUMP)
 		jump = true;
+	
+	if (currentlyPressedKeys[70]) // SPACE (JUMP)
+		getInteractedItem();
 		
 }
 

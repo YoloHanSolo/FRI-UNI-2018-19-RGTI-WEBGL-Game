@@ -262,9 +262,8 @@ function drawScene() {
 
 	mat4.translate(mvMatrix, [-cameraPosition[0], -cameraPosition[1]-jump_position, -cameraPosition[2]]);
 	
-	for( let i = 0; i < objectsName.length; i++){ 
-		objects[i].draw(objects[i].translate, [1.0, 1.0, 1.0], objects[i].rotate);
-		raycast(cameraPosition, cameraRotation, objectPosition[i], objects[i]);
+	for( let i = 0; i < objects.length; i++){ 
+		 objects[i].draw(objects[i].translate, [1.0, 1.0, 1.0], objects[i].rotate);
 	}
 }
 
@@ -302,5 +301,10 @@ function start() {
 		  collision();
 	  }
     }, 15);
+	/*
+	setInterval(function(){
+		console.log(objects)
+	}, 2000)
+	*/
   }
 }

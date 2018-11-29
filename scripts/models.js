@@ -1,22 +1,29 @@
-
 var objectsName = [
 	"map_canals","map_concrete",
 	"sky",
+	"water_gate",
 	
-	//"bars","bars",
+	"bars","bars",
 	
 	"small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe",
 	"small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe","small_pipe",
-	"small_pipe","small_pipe"
+	"small_pipe","small_pipe",
+
+	// INTERACT
+
+	"key"
 	];
 
 var objectPosition = [
 	[ 0.0, 0.0, 0.0], 	// MAP_CANALS
 	[ 0.0, 0.0, 0.0], 	// MAP_CONCRETE
 	[ 0.0, 0.0, 0.0],	// SKY
+	
+	[-6.0, 0.2, -17.2], 	// WATER_GATE
+	
 	// BARS
-	//[ 12.1, 0.0, 8.0],
-	//[-19.9, 0.0, 8.0],
+	[ 12.1, 0.0, 8.0],
+	[-19.9, 0.0, 8.0],
 	
 	// SMALL_PIPE x20
 	[ 3.1, -21.5, 6.0],
@@ -42,7 +49,10 @@ var objectPosition = [
 	[ 3.1, 14.5, 6.4],
 	
 	[ 3.1, 18.5, 6.0],
-	[ 3.1, 18.5, 6.4]
+	[ 3.1, 18.5, 6.4],
+	
+	[0.0, 1.0, -2.0] // KEY
+	//[-6.0, 1.3, 24.5] // KLJUC y/x/za
 	];
 
 var objectRotation = [
@@ -50,9 +60,10 @@ var objectRotation = [
 	[ 0.0, 0.0, 0.0], // MAP_CONCRETE
 	[ 0.0, 0.0, 0.0], // SKY
 	
+	[ 0.0, 0.0, 0.0], // WATER_GATE
 	// BARS
-	//[ 0.0, 90.0, 0.0],
-	//[ 0.0, 90.0, 0.0],
+	[ 0.0, 90.0, 0.0],
+	[ 0.0, 90.0, 0.0],
 	
 	// SMALL_PIPE x20
 	[90.0,90.0, 0.0],
@@ -78,7 +89,9 @@ var objectRotation = [
 	[90.0,90.0, 0.0],
 	
 	[90.0,90.0, 0.0],
-	[90.0,90.0, 0.0]
+	[90.0,90.0, 0.0],
+	
+	[0.0, 0.0, 0.0] // KEY
 	];	
 		
 		
