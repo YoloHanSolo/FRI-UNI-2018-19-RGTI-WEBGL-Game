@@ -57,6 +57,6 @@ Base.prototype.draw = function(translate, scale, rotate){
 	setMatrixUniforms();
 	
 	gl.drawElements(gl.TRIANGLES, this.VertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
-	
+
 	mvPopMatrix();
 }
