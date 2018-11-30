@@ -27,6 +27,22 @@ function goBack(){
 
 //GAMEPLAY FLAGS
 var hasKey = false;
+var switchOn = false;
+var gateOpen = false;
+// MOJA IMPLEMENTACIJA 
+/////
+
+function interactAll(){
+	var distance_key =	  Math.sqrt(Math.pow(cameraPosition[0]-keyPosition[0],2)	 +Math.pow(cameraPosition[2]-keyPosition[2],2)	 );
+	var distance_gate =   Math.sqrt(Math.pow(cameraPosition[0]-gatePosition[0],2)	 +Math.pow(cameraPosition[2]-gatePosition[2],2)  );
+	var distance_switch = Math.sqrt(Math.pow(cameraPosition[0]-switchPosition[0],2)	 +Math.pow(cameraPosition[2]-switchPosition[2],2));
+	if( distance_key < 2 ) hasKey = true;
+	if( distance_gate < 2 ) gateOpen = true;	
+	if( distance_switch < 2 ) switchOn = true;	
+	console.log(distance_key);
+}
+
+////
 
 function getInteractedItem(){
 	var interectedObject = null;

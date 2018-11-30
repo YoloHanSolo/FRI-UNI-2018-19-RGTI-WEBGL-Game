@@ -57,6 +57,10 @@ function collision(){
 		if( cameraPosition[2] >  19 ) cameraPosition[2] = 19.0;
 		if( cameraPosition[2] < -11 ) cameraPosition[2] = -11.0;
 	}
+	
+		if( cameraPosition[0] >= 17 && cameraPosition[0] <= 19 && !hasKey){ // GATE KEY BLOCK
+		if( cameraPosition[2] < -11 ) cameraPosition[2] = Math.round(cameraPosition[2]);
+	}
 
 	oncorner_prev = oncorner;	
 	online_prev = online;
