@@ -38,7 +38,7 @@ function getInteractedItem(){
 }
 
 function interact(obj, i){
-	if(obj.name == "kljuc_tex"){
+	if(obj.name == "key"){
 		hasKey = true;
 		objects[i] = objects[objects.length-1];
 		objects.pop();
