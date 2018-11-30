@@ -66,7 +66,6 @@ function interact(obj, i){
 		}
 	}
 	if(obj.name == "switch"){
-		console.log("qwe")
 		if(gateOpen){
 			switchOn = true;
 		}

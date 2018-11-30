@@ -306,13 +306,11 @@ function start() {
     
     // Set up to draw the scene periodically.
     setInterval(function() {
-      //requestAnimationFrame(animate);
 	  if (gameStart) {
 		  handleKeys();
 		  drawScene();
 		  playerControl();
 		  collision();
-		  //interactAll();
 	  }
     }, 15);
   }
