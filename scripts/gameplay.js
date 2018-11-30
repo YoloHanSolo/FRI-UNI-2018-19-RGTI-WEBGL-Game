@@ -27,6 +27,15 @@ function goBack(){
 	document.getElementById("main").style.display = 'inline';
 }
 
+function endGame(){
+	if(switchOn){
+		if(cameraPosition[0] > -8 && cameraPosition[0] < -4 && cameraPosition[2] < -16.5){
+			audio.pause();
+			gameOver = true;
+		}
+	}
+}
+
 //GAMEPLAY FLAGS
 var hasKey = false;
 var switchOn = false;

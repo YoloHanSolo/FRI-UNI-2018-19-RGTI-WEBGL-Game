@@ -27,6 +27,7 @@ var cameraRotation = [0.0, 0.0, 0.0];
 var objectScaling = [1.0, 1.0, 1.0]; // POZICIJA OBJEKTA V SVETU (se ne spreminja s časom)
 
 var gameStart = false;
+var gameOver = false;
 
 function mvPushMatrix() {
   var copy = mat4.create();
@@ -306,11 +307,12 @@ function start() {
     
     // Set up to draw the scene periodically.
     setInterval(function() {
-	  if (gameStart) {
+	  if (gameStart && !gameOver) {
 		  handleKeys();
 		  drawScene();
 		  playerControl();
 		  collision();
+		  endGame();
 	  }
     }, 15);
   }
