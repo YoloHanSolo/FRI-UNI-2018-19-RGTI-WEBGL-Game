@@ -32,6 +32,8 @@ function endGame(){
 		if(cameraPosition[0] > -8 && cameraPosition[0] < -4 && cameraPosition[2] < -16.5){
 			audio.pause();
 			gameOver = true;
+			document.getElementById("glcanvas").style.display = 'none';
+			document.getElementById("endScreen").style.display = 'block';
 		}
 	}
 }
