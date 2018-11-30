@@ -92,8 +92,7 @@ var objectPosition = [
 	[ 3.1, 26.5, 6.4],
 
 	
-	[0.0, 1.0, -2.0] // KEY
-	//[-6.0, 1.3, 24.5] // KLJUC y/x/za
+	[-6.0, 1.3, 24.5] // KEY
 	];
 
 var objectRotation = [
