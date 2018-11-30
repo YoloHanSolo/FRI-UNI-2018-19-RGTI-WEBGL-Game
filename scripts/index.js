@@ -17,16 +17,17 @@ var speedX = 0;
 
 var jump = false;
 var jump_position = 0; // DONT CHANGE - VAR
-var jump_height = 1;   // CONST
+var jump_height = 1.25;   // CONST
 var jump_speed = 4; // CONST
 var jump_duration = 1; // DONT CHANGE - VAR
 
-var cameraPosition = [2.0, 2.0, -2.0]; // ZAČETNA POZICIJA KAMERE (se spreminja s časom)
+var cameraPosition = [6.0, 2.0, 18.0]; // ZAČETNA POZICIJA KAMERE (se spreminja s časom)
 var cameraRotation = [0.0, 0.0, 0.0];
 
 var objectScaling = [1.0, 1.0, 1.0]; // POZICIJA OBJEKTA V SVETU (se ne spreminja s časom)
 
 var gameStart = false;
+var gameOver = false;
 
 function mvPushMatrix() {
   var copy = mat4.create();
@@ -253,7 +254,7 @@ function drawScene() {
 	// scene. Our field of view is 45 degrees, with a width/height
 	// ratio and we only want to see objects between 0.1 units
 	// and 100 units away from the camera.
-	mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);
+	mat4.perspective(60, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);
 
 	mat4.identity(mvMatrix);
 	
@@ -263,13 +264,25 @@ function drawScene() {
 	mat4.translate(mvMatrix, [-cameraPosition[0], -cameraPosition[1]-jump_position, -cameraPosition[2]]);
 	
 	for( let i = 0; i < objects.length; i++){ 
+	
+		if( hasKey && objects[i].name == "key" ) continue;
+		if( gateOpen ){
+			if( objects[i].name == "gate_b" ) continue;
+		}else{
+			if( objects[i].name == "gate_open" ) continue;		
+		}
+		if( switchOn ){
+			if( objects[i].name == "water_gate" ) continue;
+		}else{
+			if( objects[i].name == "water_gate_open" ) continue;		
+		}
+		
 		objects[i].draw(objects[i].translate, [1.0, 1.0, 1.0], objects[i].rotate);
 	}
 }
 
 function start() {
   canvas = document.getElementById("glcanvas");
-
   gl = initGL(canvas);      // Initialize the GL context
 
   // Only continue if WebGL is available and working
@@ -293,16 +306,13 @@ function start() {
     
     // Set up to draw the scene periodically.
     setInterval(function() {
-      //requestAnimationFrame(animate);
-	  if (gameStart) {
+	  if (gameStart && !gameOver) {
 		  handleKeys();
 		  drawScene();
 		  playerControl();
 		  collision();
+		  endGame();
 	  }
     }, 15);
-	setInterval(function(){
-		console.log(objects)
-	}, 2000)
   }
 }

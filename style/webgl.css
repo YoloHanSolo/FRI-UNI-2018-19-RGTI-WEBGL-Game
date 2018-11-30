@@ -3,13 +3,22 @@
 	text-align: center;
 }
 
+#glcanvas {
+  width: 1600px;
+  height: 920px;	
+}
+
 canvas {
 	display: none;
 	border: 1px solid black;
 }
 
-h1 {
-	text-align: left;
+#gameOver {
+	position: absolute;
+	top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+	display: inline;
 }
 
 h2 {
@@ -38,3 +47,11 @@ td {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+#controls{
+	position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+

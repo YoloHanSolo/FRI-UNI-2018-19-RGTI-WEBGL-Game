@@ -40,7 +40,7 @@ function handleKeys() {
 	if (currentlyPressedKeys[32] && !jump) // SPACE (JUMP)
 		jump = true;
 	
-	if (currentlyPressedKeys[70]) // SPACE (JUMP)
+	if (currentlyPressedKeys[70]) // INTERACT (F)
 		getInteractedItem();
 		
 }

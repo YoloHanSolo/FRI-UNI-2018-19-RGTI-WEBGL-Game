@@ -81,16 +81,24 @@
 	</head>
 	<body onload="start()">
 		<div id="content">
-			<canvas id="glcanvas" width="1280px" height="720px">
+			<canvas id="glcanvas" width="1100px" height="620px">
 				No <code>&lt;canvas&gt;</code> suppport in your browser.
 			</canvas>
 			<div id ="mainMenu" style="text-align: center; position: relative;" width="1280px" height="720px">
 				<img src="./assets_other/mainMenu.gif" width="1280px" height="720px">
 				<div id="main">
 					<button type="button" style="position: absolute; top: 45%; left: 43%; height:50px; width:256px;" onclick="startGame()">START</button>
-					<button type="button" style="position: absolute; top: 55%; left: 43%; height:50px; width:256px;" onclick="showCredits()">CREDITS</button>
+					<button type="button" style="position: absolute; top: 55%; left: 43%; height:50px; width:256px;" onclick="showControls()">CONTROLS</button>
+					<button type="button" style="position: absolute; top: 65%; left: 43%; height:50px; width:256px;" onclick="showCredits()">CREDITS</button>
 				</div>
-				<div id="credits" style="display: none" width="1280px" height="720px">
+				<div id="controls" style="display: none; color: white" width="1280px" height="720px">
+					<h2>MOVE - W A S D</h2>
+					<h2>LOOK - ARROW KEYS</h2>
+					<h2>JUMP - SPACE</h2>
+					<h2>INTERACT - F</h2>
+					<button type="button" style="position: absolute; top: 50%; left: 40%; height:50px; width:256px;" onclick="goBack2()">BACK</button>
+				</div>
+				<div id="credits" style="display: none; color: white" width="1280px" height="720px">
 					<h2>Developers</h2>
 					<h3>Jan Pelicon</h3>
 					<h3>Mitja Maren</h3>
@@ -99,16 +107,15 @@
 					<button type="button" style="position: absolute; top: 50%; left: 40%; height:50px; width:256px;" onclick="goBack()">BACK</button>
 				</div>
 			</div>
-			
+			<div id ="endScreen" style="text-align: center; position: relative; display: none;" width="1280px" height="720px">
+				<img src="./assets_other/endScreen.jpg" width="1280px" height="720px">
+				<div id="gameOver" width="1280px" height="720px">
+					<h1>GAME OVER
+					<br />THANKS FOR PLAYING
+					<br /> :) </h1>
+				</div>
+			</div>
 			<br />
-			<br />
-			MOVE - WASD
-			<br />
-			LEFT,RIGHT - ANGLE_X
-			<br />
-			UP,DOWN    - ANGLE_Y
-			<br />
-			JUMP	   - SPACE
 			<br />
 		</div>
 		
