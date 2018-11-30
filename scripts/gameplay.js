@@ -1,10 +1,12 @@
 //UI
+var audio;
+
 function startGame(){
 	gameStart = true;
 	document.getElementById("mainMenu").style.display = 'none';
 	document.getElementById("glcanvas").style.display = 'inline';
 	
-	var audio = new Audio("./assets_other/game.mp3");
+	audio = new Audio("./assets_other/game.mp3");
 	audio.volume = 0.3;
 	audio.addEventListener('ended', function() {
 		this.currentTime = 0;
@@ -53,6 +55,8 @@ function getInteractedItem(){
 	}
 }
 
+var lock = false; // za zaklenjena vrata
+
 function interact(obj, i){
 	if(obj.name == "key"){
 		hasKey = true;
@@ -62,12 +66,34 @@ function interact(obj, i){
 	}
 	if(obj.name == "gate_b"){
 		if(hasKey){
+			if(!gateOpen){
+				var door = new Audio("./assets_other/doorOpen.mp3");
+				door.volume = 0.5;
+				door.currentTime = 1;
+				door.play();
+			}
 			gateOpen = true;
+		}
+		else{
+			if(!lock){
+				lock = true;
+				var door = new Audio("./assets_other/doorLocked.mp3");
+				door.volume = 0.5;
+				door.addEventListener('ended', function() {
+					lock = false;
+				}, false);
+				door.play();
+			}
 		}
 	}
 	if(obj.name == "switch"){
-		console.log("qwe")
 		if(gateOpen){
+			if(!switchOn){
+				var click = new Audio("./assets_other/click.mp3");
+				click.volume = 0.5;
+				click.currentTime = 0.5;
+				click.play();
+			}
 			switchOn = true;
 		}
 	}
