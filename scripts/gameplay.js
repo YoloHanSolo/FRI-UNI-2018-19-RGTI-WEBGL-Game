@@ -60,6 +60,17 @@ function interact(obj, i){
 		objects.pop();
 		//objects.splice(i, 1);
 	}
+	if(obj.name == "gate_b"){
+		if(hasKey){
+			gateOpen = true;
+		}
+	}
+	if(obj.name == "switch"){
+		console.log("qwe")
+		if(gateOpen){
+			switchOn = true;
+		}
+	}
 }
 
 function raycast(cPosition, cRotation, oPosition, object){
@@ -83,13 +94,19 @@ function raycast(cPosition, cRotation, oPosition, object){
 	//console.log(a);
 	var b = 2 * (vectorXvector(x, omega));
 	//console.log(b);
-	var c = vectorXvector(x, x) - Math.pow(1.0, 2);
+	var c = vectorXvector(x, x) - Math.pow(2.5, 2);
 	//console.log(c);
 	
 	var D = Math.pow(b, 2) - 4 * a * c;
 	
-	if(D > 0)
-		return object;
+	if(D > 0){
+		var l1 = (-2* b - Math.sqrt(D)) / (2 * a);
+		var l2 = (-2* b + Math.sqrt(D)) / (2 * a);
+		/*if(object.name == "key")
+			console.log(l1)*/
+		if(l2 < 5.0)
+			return object;
+	}
 	else
 		return null;
 }

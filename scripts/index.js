@@ -312,7 +312,7 @@ function start() {
 		  drawScene();
 		  playerControl();
 		  collision();
-		  interactAll();
+		  //interactAll();
 	  }
     }, 15);
   }
