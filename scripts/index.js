@@ -21,7 +21,7 @@ var jump_height = 1;   // CONST
 var jump_speed = 4; // CONST
 var jump_duration = 1; // DONT CHANGE - VAR
 
-var cameraPosition = [2.0, 2.0, -2.0]; // ZAČETNA POZICIJA KAMERE (se spreminja s časom)
+var cameraPosition = [6.0, 2.0, 18.0]; // ZAČETNA POZICIJA KAMERE (se spreminja s časom)
 var cameraRotation = [0.0, 0.0, 0.0];
 
 var objectScaling = [1.0, 1.0, 1.0]; // POZICIJA OBJEKTA V SVETU (se ne spreminja s časom)
@@ -263,7 +263,20 @@ function drawScene() {
 	mat4.translate(mvMatrix, [-cameraPosition[0], -cameraPosition[1]-jump_position, -cameraPosition[2]]);
 	
 	for( let i = 0; i < objects.length; i++){ 
-		 objects[i].draw(objects[i].translate, [1.0, 1.0, 1.0], objects[i].rotate);
+	
+		if( hasKey && objects[i].name == "key" ) continue;
+		if( gateOpen ){
+			if( objects[i].name == "gate_b" ) continue;
+		}else{
+			if( objects[i].name == "gate_open" ) continue;		
+		}
+		if( switchOn ){
+			if( objects[i].name == "water_gate" ) continue;
+		}else{
+			if( objects[i].name == "water_gate_open" ) continue;		
+		}
+		
+		objects[i].draw(objects[i].translate, [1.0, 1.0, 1.0], objects[i].rotate);
 	}
 }
 
@@ -299,6 +312,7 @@ function start() {
 		  drawScene();
 		  playerControl();
 		  collision();
+		  interactAll();
 	  }
     }, 15);
   }
